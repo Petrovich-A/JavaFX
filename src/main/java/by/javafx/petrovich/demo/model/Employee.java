@@ -11,6 +11,8 @@ public class Employee {
         this.name = name;
     }
 
+    public Employee() {
+    }
 
     public int getIdEmployees() {
         return idEmployees;
