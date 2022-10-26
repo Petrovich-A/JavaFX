@@ -46,6 +46,29 @@
             <version>8.0.27</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/bayern.steinbrecher/DBConnector -->
+        <dependency>
+            <groupId>bayern.steinbrecher</groupId>
+            <artifactId>DBConnector</artifactId>
+            <version>0.15</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.31</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>openjfx-monocle</artifactId>
+            <version>jdk-12.0.1+2</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -68,7 +91,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>by.javafx.petrovich.demo/by.javafx.petrovich.demo.HelloApplication</mainClass>
+                            <mainClass>by.javafx.petrovich.demo/by.javafx.petrovich.demo.EmployeeApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
