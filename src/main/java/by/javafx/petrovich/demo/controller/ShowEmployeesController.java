@@ -3,6 +3,7 @@ package by.javafx.petrovich.demo.controller;
 import by.javafx.petrovich.demo.model.Employee;
 import by.javafx.petrovich.demo.util.DBUtil;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,8 +19,6 @@ import java.util.ResourceBundle;
 public class ShowEmployeesController implements Initializable {
     private static final String CONNECTION_LINK = "jdbc:mysql://localhost:3306/employeesort";
     @FXML
-    private Label welcomeText;
-    @FXML
     private TableView<Employee> table;
     @FXML
     private TableColumn<Employee, Integer> column_id_employee;
@@ -27,9 +26,12 @@ public class ShowEmployeesController implements Initializable {
     private TableColumn<Employee, String> column_name;
     @FXML
     private ChoiceBox<String> choice_box;
+    @FXML
+    private Button buttonFind;
     private final Employee employee = new Employee();
 
     ObservableList<Employee> listEmployee;
+    ObservableList<Employee> listEmployee1;
 
     Connection connection = null;
     ResultSet resultSet = null;
@@ -54,8 +56,14 @@ public class ShowEmployeesController implements Initializable {
     }
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void onFindButtonClick(ActionEvent event) {
+        System.out.println("efekhkhkh");
+        Employee employee1 = new Employee(8, "name8");
+        Employee employee2 = new Employee(7, "name7");
+        listEmployee.add(employee1);
+        listEmployee.add(employee2);
+        System.out.println(listEmployee.toString());
+        table.setItems(listEmployee);
     }
 
 

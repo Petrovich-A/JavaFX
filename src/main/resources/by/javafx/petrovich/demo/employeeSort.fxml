@@ -27,7 +27,8 @@
                 <TextField layoutX="300.0" layoutY="40.0" prefHeight="26.0" prefWidth="256.0"/>
                 <HBox layoutX="42.0" layoutY="87.0" prefHeight="34.0" prefWidth="515.0">
                     <children>
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0"
+                        <Button fx:id="button_find" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                                onAction="#onFindButtonClick" prefHeight="26.0" prefWidth="60.0"
                                 style="-fx-background-color: #00CED1;" text="find">
                             <HBox.margin>
                                 <Insets/>
