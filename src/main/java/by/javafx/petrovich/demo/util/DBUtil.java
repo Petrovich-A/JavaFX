@@ -52,4 +52,44 @@ public class DBUtil implements Initializable {
         return allEmployees;
     }
 
+    public static ObservableList<Employee> getEmployeeById(int id) {
+        Connection connection = ConnectDd();
+        ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idEmployees, name FROM employees where idEmployees = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Employee employee = new Employee();
+                employee.setIdEmployees(resultSet.getInt("idEmployees"));
+                employee.setName(resultSet.getString("name"));
+                allEmployees.add(employee);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("allEmployees: " + allEmployees);
+        return allEmployees;
+    }
+
+    public static ObservableList<Employee> getEmployeeByName(String name) {
+        Connection connection = ConnectDd();
+        ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idEmployees, name FROM employees where name = ?");
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Employee employee = new Employee();
+                employee.setIdEmployees(resultSet.getInt("idEmployees"));
+                employee.setName(resultSet.getString("name"));
+                allEmployees.add(employee);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return allEmployees;
+    }
+
+
 }
