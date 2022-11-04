@@ -2,6 +2,7 @@ package by.javafx.petrovich.demo.controller;
 
 import by.javafx.petrovich.demo.model.Employee;
 import by.javafx.petrovich.demo.util.DBUtil;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +18,6 @@ import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class ShowEmployeesController implements Initializable {
-    private static final String CONNECTION_LINK = "jdbc:mysql://localhost:3306/employeesort";
     @FXML
     private TableView<Employee> table;
     @FXML
@@ -28,10 +28,9 @@ public class ShowEmployeesController implements Initializable {
     private ChoiceBox<String> choice_box;
     @FXML
     private Button buttonFind;
+    @FXML
+    private TextField text_field;
     private final Employee employee = new Employee();
-
-    ObservableList<Employee> listEmployee;
-    ObservableList<Employee> listEmployee1;
 
     Connection connection = null;
     ResultSet resultSet = null;
@@ -39,6 +38,7 @@ public class ShowEmployeesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<Employee> listEmployee;
         Field[] fields = getFields();
         column_id_employee.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("idEmployees"));
         column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
@@ -57,12 +57,26 @@ public class ShowEmployeesController implements Initializable {
 
     @FXML
     protected void onFindButtonClick(ActionEvent event) {
-        System.out.println("efekhkhkh");
-        Employee employee1 = new Employee(8, "name8");
-        Employee employee2 = new Employee(7, "name7");
-        listEmployee.add(employee1);
-        listEmployee.add(employee2);
-        System.out.println(listEmployee.toString());
+        ObservableList<Employee> listEmployee = FXCollections.observableArrayList();
+        String selectedItem = choice_box.getSelectionModel().getSelectedItem();
+        String searchKeyWord = text_field.getText();
+        if (selectedItem == "idEmployees") {
+            try {
+                listEmployee = DBUtil.getEmployeeById(Integer.valueOf(searchKeyWord));
+            } catch (NumberFormatException e) {
+                String warningMessage = "enter a number";
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("content");
+                alert.showAndWait();
+            } catch (Exception e) {
+                System.out.println("error");
+            }
+        } else if (selectedItem == "name") {
+            listEmployee = DBUtil.getEmployeeByName(searchKeyWord);
+        } else {
+            System.out.println("no choice");
+        }
         table.setItems(listEmployee);
     }
 
