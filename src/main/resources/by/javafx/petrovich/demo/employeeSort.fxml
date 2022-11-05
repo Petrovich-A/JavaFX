@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
       prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
@@ -10,11 +11,19 @@
     <children>
         <AnchorPane prefHeight="252.0" prefWidth="600.0" style="-fx-background-color: AliceBlue;">
             <children>
-                <Label layoutX="261.0" layoutY="14.0" prefHeight="18.0" prefWidth="77.0" text="labelTableName"/>
+                <Label contentDisplay="CENTER" layoutX="224.0" layoutY="14.0" prefHeight="26.0" prefWidth="152.0"
+                       text="The list of employees" textAlignment="CENTER">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
                 <TableView fx:id="table" layoutX="42.0" layoutY="38.0" prefHeight="200.0" prefWidth="515.0">
                     <columns>
-                        <TableColumn fx:id="column_id_employee" prefWidth="120.00006103515625" text="idEmployee"/>
-                        <TableColumn fx:id="column_name" prefWidth="85.60003662109375" text="name"/>
+                        <TableColumn fx:id="column_id" prefWidth="80.79999160766602" text="id"/>
+                        <TableColumn fx:id="column_personnel_number" prefWidth="125.4000244140625"
+                                     text="Personnel number"/>
+                        <TableColumn fx:id="column_name" prefWidth="128.99998474121094" text="Name"/>
+                        <TableColumn fx:id="column_surname" prefWidth="178.20001220703125" text="Surname"/>
                     </columns>
                 </TableView>
             </children>
@@ -24,7 +33,8 @@
             <children>
                 <ChoiceBox fx:id="choice_box" layoutX="42.0" layoutY="40.0" prefHeight="26.0" prefWidth="171.0"
                            style="-fx-background-color: #ADD8E6;"/>
-                <TextField fx:id="text_field" layoutX="300.0" layoutY="40.0" onAction="#onFindButtonClick" prefHeight="26.0" prefWidth="256.0"/>
+                <TextField fx:id="text_field" layoutX="300.0" layoutY="40.0" onAction="#onFindButtonClick"
+                           prefHeight="26.0" prefWidth="256.0"/>
                 <HBox layoutX="42.0" layoutY="87.0" prefHeight="34.0" prefWidth="515.0">
                     <children>
                         <Button fx:id="button_find" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
