@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static by.javafx.petrovich.demo.controller.AlertMessages.*;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
 import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
 
 public class ShowEmployeesController implements Initializable {
@@ -38,7 +39,7 @@ public class ShowEmployeesController implements Initializable {
         Field[] fields = getFields();
         column_id_employee.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("idEmployees"));
         column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-        listEmployee = DBUtil.getDataEmployee();
+        listEmployee = DBUtil.receiveAllEmployee();
         table.setItems(listEmployee);
         for (Field field : fields) {
             choice_box.getItems().add(field.getName());
@@ -56,15 +57,14 @@ public class ShowEmployeesController implements Initializable {
             switch (selectedItem) {
                 case ("idEmployees"):
                     try {
-                        listEmployee = DBUtil.getEmployeeById(Integer.valueOf(searchKeyWord));
+                        listEmployee = DBUtil.receiveEmployeeById(Integer.valueOf(searchKeyWord));
                     } catch (NumberFormatException e) {
-                        String title = "ERROR";
-                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, title);
+                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
                     }
                     setList(listEmployee);
                     break;
                 case ("name"):
-                    listEmployee = DBUtil.getEmployeeByName(searchKeyWord);
+                    listEmployee = DBUtil.receiveEmployeeByName(searchKeyWord);
                     setList(listEmployee);
                     break;
             }

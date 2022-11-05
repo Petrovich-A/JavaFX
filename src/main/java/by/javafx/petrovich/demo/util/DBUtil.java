@@ -15,6 +15,10 @@ public class DBUtil implements Initializable {
     private static final String CONNECTION_LINK = "jdbc:mysql://localhost:3306/employeesort";
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "HzaArk_XnsS";
+    private static final String SQL_READ_ALL_EMPLOYEE = "SELECT idEmployees, name FROM employeesort.employees";
+    private static final String SQL_READ_EMPLOYEE_BY_ID = "SELECT idEmployees, name FROM employees where idEmployees = ?";
+    private static final String SQL_READ_EMPLOYEE_BY_NAME = "SELECT idEmployees, name FROM employees where name = ?";
+
 
     public static Connection ConnectDd() {
         try {
@@ -32,11 +36,11 @@ public class DBUtil implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    public static ObservableList<Employee> getDataEmployee() {
+    public static ObservableList<Employee> receiveAllEmployee() {
         Connection connection = ConnectDd();
         ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idEmployees, name FROM employeesort.employees");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_ALL_EMPLOYEE);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Employee employee = new Employee();
@@ -50,11 +54,11 @@ public class DBUtil implements Initializable {
         return allEmployees;
     }
 
-    public static ObservableList<Employee> getEmployeeById(int id) {
+    public static ObservableList<Employee> receiveEmployeeById(int id) {
         Connection connection = ConnectDd();
         ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idEmployees, name FROM employees where idEmployees = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -69,11 +73,11 @@ public class DBUtil implements Initializable {
         return allEmployees;
     }
 
-    public static ObservableList<Employee> getEmployeeByName(String name) {
+    public static ObservableList<Employee> receiveEmployeeByName(String name) {
         Connection connection = ConnectDd();
         ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT idEmployees, name FROM employees where name = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_NAME);
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
