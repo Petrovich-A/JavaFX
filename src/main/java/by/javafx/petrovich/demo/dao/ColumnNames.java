@@ -1,6 +1,6 @@
 package by.javafx.petrovich.demo.dao;
 
-public class ColumnLabels {
+public class ColumnNames {
     public static final String ID_EMPLOYEE = "id_employee";
     public static final String PERSONNEL_NUMBER = "personnel_number";
     public static final String NAME = "name";
