@@ -20,7 +20,6 @@ public class DBUtil implements Initializable {
         try {
             Class.forName(JDBC_DRIVER_NAME);
             Connection connection = DriverManager.getConnection(CONNECTION_LINK, USER_NAME, PASSWORD);
-//            JOptionPan
             return connection;
         } catch (Exception e) {
             System.out.println("Connection Failed! Check output console" + e);

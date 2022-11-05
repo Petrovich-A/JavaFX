@@ -12,10 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ResourceBundle;
+
+import static by.javafx.petrovich.demo.controller.AlertMessages.*;
 
 public class ShowEmployeesController implements Initializable {
     @FXML
@@ -32,10 +31,6 @@ public class ShowEmployeesController implements Initializable {
     private TextField text_field;
     private final Employee employee = new Employee();
 
-    Connection connection = null;
-    ResultSet resultSet = null;
-    PreparedStatement preparedStatement = null;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
@@ -49,28 +44,21 @@ public class ShowEmployeesController implements Initializable {
         }
     }
 
-    private Field[] getFields() {
-        Class<? extends Employee> clazz = employee.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        return fields;
-    }
-
     @FXML
     protected void onFindButtonClick(ActionEvent event) {
         ObservableList<Employee> listEmployee = FXCollections.observableArrayList();
         String selectedItem;
         String searchKeyWord;
         try {
-           selectedItem = choice_box.getSelectionModel().getSelectedItem();
-           searchKeyWord = text_field.getText();
+            selectedItem = choice_box.getSelectionModel().getSelectedItem();
+            searchKeyWord = text_field.getText();
             switch (selectedItem) {
                 case ("idEmployees"):
                     try {
                         listEmployee = DBUtil.getEmployeeById(Integer.valueOf(searchKeyWord));
                     } catch (NumberFormatException e) {
-                        String alertMessage = "enter a number";
                         String title = "ERROR";
-                        showAlert(alertMessage, Alert.AlertType.WARNING, title);
+                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, title);
                     }
                     setList(listEmployee);
                     break;
@@ -78,21 +66,19 @@ public class ShowEmployeesController implements Initializable {
                     listEmployee = DBUtil.getEmployeeByName(searchKeyWord);
                     setList(listEmployee);
                     break;
-                }
+            }
         } catch (Exception e) {
-            String alertMessage = "choice an item and fill a text field";
             String title = "INFORMATION";
-            showAlert(alertMessage, Alert.AlertType.INFORMATION, title);
+            showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, title);
         }
     }
 
     private void setList(ObservableList<Employee> listEmployee) {
-        String alertMessage = "no results";
         String title = "INFORMATION";
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
         } else {
-            showAlert(alertMessage, Alert.AlertType.INFORMATION, title);
+            showAlert(NO_RESULTS, Alert.AlertType.INFORMATION, title);
         }
     }
 
@@ -101,6 +87,12 @@ public class ShowEmployeesController implements Initializable {
         alert.setTitle(title);
         alert.setContentText(alertMessage);
         alert.showAndWait();
+    }
+
+    private Field[] getFields() {
+        Class<? extends Employee> clazz = employee.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        return fields;
     }
 
 }
