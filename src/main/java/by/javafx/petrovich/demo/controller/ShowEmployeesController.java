@@ -14,7 +14,9 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static by.javafx.petrovich.demo.controller.AlertMessages.*;
+import static by.javafx.petrovich.demo.controller.AlertMessages.INPUT_NUMBER;
+import static by.javafx.petrovich.demo.controller.AlertMessages.CHOICE_AND_FILL;
+import static by.javafx.petrovich.demo.controller.AlertMessages.NO_RESULTS;
 import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
 import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
 
@@ -22,9 +24,13 @@ public class ShowEmployeesController implements Initializable {
     @FXML
     private TableView<Employee> table;
     @FXML
-    private TableColumn<Employee, Integer> column_id_employee;
+    private TableColumn<Employee, Integer> column_id;
+    @FXML
+    private TableColumn<Employee, Integer> column_personnel_number;
     @FXML
     private TableColumn<Employee, String> column_name;
+    @FXML
+    private TableColumn<Employee, String> column_surname;
     @FXML
     private ChoiceBox<String> choice_box;
     @FXML
@@ -37,8 +43,11 @@ public class ShowEmployeesController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
         Field[] fields = getFields();
-        column_id_employee.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("idEmployees"));
+        column_id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("idEmployees"));
+        column_personnel_number.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("personnelNumber"));
         column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+        column_surname.setCellValueFactory(new PropertyValueFactory<Employee, String>("surname"));
+
         listEmployee = DBUtil.receiveAllEmployee();
         table.setItems(listEmployee);
         for (Field field : fields) {
