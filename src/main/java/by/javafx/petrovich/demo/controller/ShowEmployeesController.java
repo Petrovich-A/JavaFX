@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static by.javafx.petrovich.demo.controller.AlertMessages.*;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
 
 public class ShowEmployeesController implements Initializable {
     @FXML
@@ -68,17 +69,15 @@ public class ShowEmployeesController implements Initializable {
                     break;
             }
         } catch (Exception e) {
-            String title = "INFORMATION";
-            showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, title);
+            showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, INFORMATION);
         }
     }
 
     private void setList(ObservableList<Employee> listEmployee) {
-        String title = "INFORMATION";
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
         } else {
-            showAlert(NO_RESULTS, Alert.AlertType.INFORMATION, title);
+            showAlert(NO_RESULTS, Alert.AlertType.INFORMATION, INFORMATION);
         }
     }
 
