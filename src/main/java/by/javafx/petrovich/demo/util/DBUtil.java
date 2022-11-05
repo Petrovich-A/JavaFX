@@ -48,7 +48,6 @@ public class DBUtil implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("allEmployees: " + allEmployees);
         return allEmployees;
     }
 
@@ -68,7 +67,6 @@ public class DBUtil implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("allEmployees: " + allEmployees);
         return allEmployees;
     }
 

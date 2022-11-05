@@ -58,27 +58,49 @@ public class ShowEmployeesController implements Initializable {
     @FXML
     protected void onFindButtonClick(ActionEvent event) {
         ObservableList<Employee> listEmployee = FXCollections.observableArrayList();
-        String selectedItem = choice_box.getSelectionModel().getSelectedItem();
-        String searchKeyWord = text_field.getText();
-        if (selectedItem == "idEmployees") {
-            try {
-                listEmployee = DBUtil.getEmployeeById(Integer.valueOf(searchKeyWord));
-            } catch (NumberFormatException e) {
-                String warningMessage = "enter a number";
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("content");
-                alert.showAndWait();
-            } catch (Exception e) {
-                System.out.println("error");
-            }
-        } else if (selectedItem == "name") {
-            listEmployee = DBUtil.getEmployeeByName(searchKeyWord);
-        } else {
-            System.out.println("no choice");
+        String selectedItem;
+        String searchKeyWord;
+        try {
+           selectedItem = choice_box.getSelectionModel().getSelectedItem();
+           searchKeyWord = text_field.getText();
+            switch (selectedItem) {
+                case ("idEmployees"):
+                    try {
+                        listEmployee = DBUtil.getEmployeeById(Integer.valueOf(searchKeyWord));
+                    } catch (NumberFormatException e) {
+                        String alertMessage = "enter a number";
+                        String title = "ERROR";
+                        showAlert(alertMessage, Alert.AlertType.WARNING, title);
+                    }
+                    setList(listEmployee);
+                    break;
+                case ("name"):
+                    listEmployee = DBUtil.getEmployeeByName(searchKeyWord);
+                    setList(listEmployee);
+                    break;
+                }
+        } catch (Exception e) {
+            String alertMessage = "choice an item and fill a text field";
+            String title = "INFORMATION";
+            showAlert(alertMessage, Alert.AlertType.INFORMATION, title);
         }
-        table.setItems(listEmployee);
     }
 
+    private void setList(ObservableList<Employee> listEmployee) {
+        String alertMessage = "no results";
+        String title = "INFORMATION";
+        if (!listEmployee.isEmpty()) {
+            table.setItems(listEmployee);
+        } else {
+            showAlert(alertMessage, Alert.AlertType.INFORMATION, title);
+        }
+    }
+
+    private void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(alertMessage);
+        alert.showAndWait();
+    }
 
 }
