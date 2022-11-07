@@ -67,14 +67,29 @@ public class ShowEmployeesController implements Initializable {
                 case ("idEmployees"):
                     try {
                         listEmployee = DBUtil.receiveEmployeeById(Integer.valueOf(searchKeyWord));
+                        setList(listEmployee);
+                        break;
+                    } catch (NumberFormatException e) {
+                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
+//                        LablesField.ID.getFieldNameDB();
+                    }
+                case ("personnelNumber"):
+                    try {
+                        listEmployee = DBUtil.receiveEmployeeByPersonnelNumber(Integer.valueOf(searchKeyWord));
+                        setList(listEmployee);
+                        break;
                     } catch (NumberFormatException e) {
                         showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
                     }
-                    setList(listEmployee);
-                    break;
                 case ("name"):
                     listEmployee = DBUtil.receiveEmployeeByName(searchKeyWord);
                     setList(listEmployee);
+                    break;
+                case ("surname"):
+                    listEmployee = DBUtil.receiveEmployeeBySurname(searchKeyWord);
+                    setList(listEmployee);
+                    break;
+                default:
                     break;
             }
         } catch (Exception e) {
