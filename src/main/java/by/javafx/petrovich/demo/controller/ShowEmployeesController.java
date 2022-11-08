@@ -2,23 +2,24 @@ package by.javafx.petrovich.demo.controller;
 
 import by.javafx.petrovich.demo.dao.impl.EmployeeDaoImpl;
 import by.javafx.petrovich.demo.model.Employee;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import static by.javafx.petrovich.demo.controller.AlertMessages.*;
-import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
-import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.*;
+import static by.javafx.petrovich.demo.controller.ChoiceBoxItemNames.*;
 import static by.javafx.petrovich.demo.controller.EmployeeFieldsNames.*;
 
+/**
+ * @author Petrovich A.V.
+ */
 public class ShowEmployeesController implements Initializable {
     @FXML
     private TableView<Employee> table;
@@ -33,73 +34,82 @@ public class ShowEmployeesController implements Initializable {
     @FXML
     private ChoiceBox<String> choice_box;
     @FXML
-    private Button buttonFind;
-    @FXML
     private TextField text_field;
     private final Employee employee = new Employee();
+
 
     private EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
-        Field[] fields = getFields();
-        column_id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>(ID_EMPLOYEE));
-        column_personnel_number.setCellValueFactory(new PropertyValueFactory<Employee, Integer>(PERSONNEL_NUMBER));
-        column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>(NAME));
-        column_surname.setCellValueFactory(new PropertyValueFactory<Employee, String>(SURNAME));
+        ArrayList<String> choiceBoxItemNames = initializeChoiceBoxItems();
+        column_id.setCellValueFactory(new PropertyValueFactory<>(ID_EMPLOYEE));
+        column_personnel_number.setCellValueFactory(new PropertyValueFactory<>(PERSONNEL_NUMBER));
+        column_name.setCellValueFactory(new PropertyValueFactory<>(NAME));
+        column_surname.setCellValueFactory(new PropertyValueFactory<>(SURNAME));
 
         listEmployee = employeeDaoImpl.receiveAllEmployee();
         table.setItems(listEmployee);
-        for (Field field : fields) {
-            choice_box.getItems().add(field.getName());
-        }
-
+        choiceBoxItemNames.forEach((itemName) -> choice_box.getItems().add(itemName));
     }
 
+    /**
+     *
+     */
     @FXML
-    protected void onFindButtonClick(ActionEvent event) {
-        ObservableList<Employee> listEmployee = FXCollections.observableArrayList();
+    protected void onFindButtonClick() {
+        ObservableList<Employee> listEmployee;
         String selectedItem;
         String searchKeyWord;
         try {
             selectedItem = choice_box.getSelectionModel().getSelectedItem();
             searchKeyWord = text_field.getText();
-            switch (selectedItem) {
-                case (ID_EMPLOYEE):
-                    try {
-                        listEmployee = employeeDaoImpl.receiveEmployeeById(Integer.valueOf(searchKeyWord));
-                        setList(listEmployee);
-                        break;
-                    } catch (NumberFormatException e) {
-                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
-//                        LablesField.ID.getFieldNameDB();
-                    }
-                case (PERSONNEL_NUMBER):
-                    try {
-                        listEmployee = employeeDaoImpl.receiveEmployeeByPersonnelNumber(Integer.valueOf(searchKeyWord));
-                        setList(listEmployee);
-                        break;
-                    } catch (NumberFormatException e) {
-                        showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
-                    }
-                case (NAME):
-                    listEmployee = employeeDaoImpl.receiveEmployeeByName(searchKeyWord);
-                    setList(listEmployee);
-                    break;
-                case (SURNAME):
-                    listEmployee = employeeDaoImpl.receiveEmployeeBySurname(searchKeyWord);
-                    setList(listEmployee);
-                    break;
-                default:
-                    break;
+            if (selectedItem == null) {
+                showAlert(NO_CHOICE_ITEM, Alert.AlertType.WARNING, WARNING);
+                return;
             }
+            if (searchKeyWord.isEmpty()) {
+                showAlert(NO_INPUT_VALUE, Alert.AlertType.WARNING, WARNING);
+                return;
+            }
+            switch (selectedItem) {
+                case (ID_ITEM) -> {
+                    listEmployee = employeeDaoImpl.receiveEmployeeById(Integer.parseInt(searchKeyWord));
+                    putItems(listEmployee);
+                }
+                case (PERSONNEL_NUMBER_ITEM) -> {
+                    listEmployee = employeeDaoImpl.receiveEmployeeByPersonnelNumber(Integer.parseInt(searchKeyWord));
+                    putItems(listEmployee);
+                }
+                case (NAME_ITEM) -> {
+                    listEmployee = employeeDaoImpl.receiveEmployeeByName(searchKeyWord);
+                    putItems(listEmployee);
+                }
+                case (SURNAME_ITEM) -> {
+                    listEmployee = employeeDaoImpl.receiveEmployeeBySurname(searchKeyWord);
+                    putItems(listEmployee);
+                }
+                default -> {
+                }
+            }
+        } catch (NumberFormatException e) {
+            showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
         } catch (Exception e) {
             showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, INFORMATION);
         }
     }
 
-    private void setList(ObservableList<Employee> listEmployee) {
+    private ArrayList<String> initializeChoiceBoxItems() {
+        ArrayList<String> choiceBoxItemNames = new ArrayList<>();
+        choiceBoxItemNames.add(ID_ITEM);
+        choiceBoxItemNames.add(PERSONNEL_NUMBER_ITEM);
+        choiceBoxItemNames.add(NAME_ITEM);
+        choiceBoxItemNames.add(SURNAME_ITEM);
+        return choiceBoxItemNames;
+    }
+
+    private void putItems(ObservableList<Employee> listEmployee) {
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
         } else {
@@ -112,12 +122,6 @@ public class ShowEmployeesController implements Initializable {
         alert.setTitle(title);
         alert.setContentText(alertMessage);
         alert.showAndWait();
-    }
-
-    private Field[] getFields() {
-        Class<? extends Employee> clazz = employee.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        return fields;
     }
 
 }
