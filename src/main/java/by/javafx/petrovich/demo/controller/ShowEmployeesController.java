@@ -1,7 +1,7 @@
 package by.javafx.petrovich.demo.controller;
 
+import by.javafx.petrovich.demo.dao.impl.EmployeeDaoImpl;
 import by.javafx.petrovich.demo.model.Employee;
-import by.javafx.petrovich.demo.util.DBUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +14,10 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static by.javafx.petrovich.demo.controller.AlertMessages.INPUT_NUMBER;
-import static by.javafx.petrovich.demo.controller.AlertMessages.CHOICE_AND_FILL;
-import static by.javafx.petrovich.demo.controller.AlertMessages.NO_RESULTS;
+import static by.javafx.petrovich.demo.controller.AlertMessages.*;
 import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
 import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
+import static by.javafx.petrovich.demo.controller.EmployeeFieldsNames.*;
 
 public class ShowEmployeesController implements Initializable {
     @FXML
@@ -39,20 +38,23 @@ public class ShowEmployeesController implements Initializable {
     private TextField text_field;
     private final Employee employee = new Employee();
 
+    private EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
         Field[] fields = getFields();
-        column_id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("idEmployees"));
-        column_personnel_number.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("personnelNumber"));
-        column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-        column_surname.setCellValueFactory(new PropertyValueFactory<Employee, String>("surname"));
+        column_id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>(ID_EMPLOYEE));
+        column_personnel_number.setCellValueFactory(new PropertyValueFactory<Employee, Integer>(PERSONNEL_NUMBER));
+        column_name.setCellValueFactory(new PropertyValueFactory<Employee, String>(NAME));
+        column_surname.setCellValueFactory(new PropertyValueFactory<Employee, String>(SURNAME));
 
-        listEmployee = DBUtil.receiveAllEmployee();
+        listEmployee = employeeDaoImpl.receiveAllEmployee();
         table.setItems(listEmployee);
         for (Field field : fields) {
             choice_box.getItems().add(field.getName());
         }
+
     }
 
     @FXML
@@ -64,29 +66,29 @@ public class ShowEmployeesController implements Initializable {
             selectedItem = choice_box.getSelectionModel().getSelectedItem();
             searchKeyWord = text_field.getText();
             switch (selectedItem) {
-                case ("idEmployees"):
+                case (ID_EMPLOYEE):
                     try {
-                        listEmployee = DBUtil.receiveEmployeeById(Integer.valueOf(searchKeyWord));
+                        listEmployee = employeeDaoImpl.receiveEmployeeById(Integer.valueOf(searchKeyWord));
                         setList(listEmployee);
                         break;
                     } catch (NumberFormatException e) {
                         showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
 //                        LablesField.ID.getFieldNameDB();
                     }
-                case ("personnelNumber"):
+                case (PERSONNEL_NUMBER):
                     try {
-                        listEmployee = DBUtil.receiveEmployeeByPersonnelNumber(Integer.valueOf(searchKeyWord));
+                        listEmployee = employeeDaoImpl.receiveEmployeeByPersonnelNumber(Integer.valueOf(searchKeyWord));
                         setList(listEmployee);
                         break;
                     } catch (NumberFormatException e) {
                         showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
                     }
-                case ("name"):
-                    listEmployee = DBUtil.receiveEmployeeByName(searchKeyWord);
+                case (NAME):
+                    listEmployee = employeeDaoImpl.receiveEmployeeByName(searchKeyWord);
                     setList(listEmployee);
                     break;
-                case ("surname"):
-                    listEmployee = DBUtil.receiveEmployeeBySurname(searchKeyWord);
+                case (SURNAME):
+                    listEmployee = employeeDaoImpl.receiveEmployeeBySurname(searchKeyWord);
                     setList(listEmployee);
                     break;
                 default:
