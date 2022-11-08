@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -19,11 +20,10 @@
                 </Label>
                 <TableView fx:id="table" layoutX="42.0" layoutY="38.0" prefHeight="200.0" prefWidth="515.0">
                     <columns>
-                        <TableColumn fx:id="column_id" prefWidth="80.79999160766602" text="id"/>
-                        <TableColumn fx:id="column_personnel_number" prefWidth="125.4000244140625"
-                                     text="Personnel number"/>
-                        <TableColumn fx:id="column_name" prefWidth="128.99998474121094" text="Name"/>
-                        <TableColumn fx:id="column_surname" prefWidth="178.20001220703125" text="Surname"/>
+                        <TableColumn fx:id="column_id" prefWidth="80.0" text="id"/>
+                        <TableColumn fx:id="column_personnel_number" prefWidth="125.0" text="Personnel number"/>
+                        <TableColumn fx:id="column_name" prefWidth="128.0" text="Name"/>
+                        <TableColumn fx:id="column_surname" prefWidth="178.0" text="Surname"/>
                     </columns>
                 </TableView>
             </children>
@@ -40,13 +40,18 @@
                         <Button fx:id="button_find" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
                                 onAction="#onFindButtonClick" prefHeight="26.0" prefWidth="60.0"
                                 style="-fx-background-color: #00CED1;" text="find">
+                            <graphic>
+                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                    <Image url="@icons/search.png"/>
+                                </ImageView>
+                            </graphic>
                             <HBox.margin>
                                 <Insets/>
                             </HBox.margin>
                         </Button>
                     </children>
                 </HBox>
-                <Label layoutX="42.0" layoutY="14.0" text="findBy"/>
+                <Label layoutX="42.0" layoutY="14.0" text="find by"/>
             </children>
         </AnchorPane>
     </children>
