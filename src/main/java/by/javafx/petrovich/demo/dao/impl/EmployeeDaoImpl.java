@@ -5,21 +5,23 @@ import by.javafx.petrovich.demo.model.Employee;
 import by.javafx.petrovich.demo.util.DateBaseUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static by.javafx.petrovich.demo.dao.ColumnNames.ID_EMPLOYEE;
-import static by.javafx.petrovich.demo.dao.ColumnNames.PERSONNEL_NUMBER;
-import static by.javafx.petrovich.demo.dao.ColumnNames.NAME;
-import static by.javafx.petrovich.demo.dao.ColumnNames.SURNAME;
+import static by.javafx.petrovich.demo.dao.DateBaseColumnNames.*;
 
 public class EmployeeDaoImpl implements EmployeeDao {
     private DateBaseUtil dateBaseUtil = new DateBaseUtil();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String PERCENT_SIGN = "%";
-    private static final String SQL_READ_ALL_EMPLOYEE = "SELECT id_employee, personnel_number, name, surname FROM employeesort.employees;";
+    private static final String SQL_READ_ALL_EMPLOYEE = "SELECT id_employee, personnel_number, name, surname " +
+            "FROM employeesort.employees;";
     private static final String SQL_READ_EMPLOYEE_BY_ID = "SELECT id_employee, personnel_number, name, surname " +
             "FROM employees where id_employee = ?";
     private static final String SQL_READ_EMPLOYEE_BY_PERSONNEL_NUMBER = "SELECT id_employee, personnel_number, name, surname " +
@@ -34,21 +36,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public ObservableList<Employee> receiveAllEmployee() {
-        Connection connection = dateBaseUtil.receiveConnection();
-        ObservableList<Employee> allEmployees = FXCollections.observableArrayList();
-        try {
+        ObservableList<Employee> allEmployees;
+        try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_ALL_EMPLOYEE);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
-                employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-                employee.setName(resultSet.getString(NAME));
-                employee.setSurname(resultSet.getString(SURNAME));
-                allEmployees.add(employee);
-            }
+            allEmployees = putEmployees(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading all Employees from date base have done successfully. " +
+                    "allEmployees: %s", allEmployees));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Can't receive all employees from date base.", e));
         }
         return allEmployees;
     }
@@ -59,24 +55,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public ObservableList<Employee> receiveEmployeeById(int id) {
-        Connection connection = dateBaseUtil.receiveConnection();
-        ObservableList<Employee> allEmployeesById = FXCollections.observableArrayList();
-        try {
+        ObservableList<Employee> employeesById;
+        try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
-                employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-                employee.setName(resultSet.getString(NAME));
-                employee.setSurname(resultSet.getString(SURNAME));
-                allEmployeesById.add(employee);
-            }
+            employeesById = putEmployees(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %s have done successfully. " +
+                    "Employee: %s.", id, employeesById));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Can't receive employee with id %s from date base.", id, e));
         }
-        return allEmployeesById;
+        return employeesById;
     }
 
     /**
@@ -85,48 +75,37 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public ObservableList<Employee> receiveEmployeeByPersonnelNumber(int personnelNumber) {
-        Connection connection = dateBaseUtil.receiveConnection();
-        ObservableList<Employee> employeeByPersonnelNumber = FXCollections.observableArrayList();
-        try {
+        ObservableList<Employee> employeeByPersonnelNumber;
+        try (Connection connection = dateBaseUtil.receiveConnection();) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_PERSONNEL_NUMBER);
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
-                employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-                employee.setName(resultSet.getString(NAME));
-                employee.setSurname(resultSet.getString(SURNAME));
-                employeeByPersonnelNumber.add(employee);
-            }
+            employeeByPersonnelNumber = putEmployees(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with personnelNumber %s have done successfully. " +
+                    "Employee: %s.", personnelNumber, employeeByPersonnelNumber));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Can't receive employee with personnelNumber %s from date base.", personnelNumber, e));
         }
         return employeeByPersonnelNumber;
     }
 
     /**
+     *
      * @param name
      * @return
      */
     @Override
     public ObservableList<Employee> receiveEmployeeByName(String name) {
-        Connection connection = dateBaseUtil.receiveConnection();
-        ObservableList<Employee> employeesByName = FXCollections.observableArrayList();
-        try {
+        ObservableList<Employee> employeesByName;
+        try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_NAME);
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
-                employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-                employee.setName(resultSet.getString(NAME));
-                employee.setSurname(resultSet.getString(SURNAME));
-                employeesByName.add(employee);
-            }
+           employeesByName = putEmployees(resultSet);
+           LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
+                   "Employee: %s.", name, employeesByName));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Can't receive employee with name %s from date base.", name, e));
         }
         return employeesByName;
     }
@@ -137,24 +116,30 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public ObservableList<Employee> receiveEmployeeBySurname(String surname) {
-        Connection connection = dateBaseUtil.receiveConnection();
         ObservableList<Employee> employeeBySurname = FXCollections.observableArrayList();
-        try {
+        try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_SURNAME);
             preparedStatement.setString(1, surname + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
-                employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-                employee.setName(resultSet.getString(NAME));
-                employee.setSurname(resultSet.getString(SURNAME));
-                employeeBySurname.add(employee);
-            }
+            employeeBySurname = putEmployees(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
+                    "Employee: %s.", surname, employeeBySurname));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Can't receive employee with surname %s from date base.", surname, e));
         }
         return employeeBySurname;
     }
 
+    private ObservableList<Employee> putEmployees(ResultSet resultSet) throws SQLException {
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            Employee employee = new Employee();
+            employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
+            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
+            employee.setName(resultSet.getString(NAME));
+            employee.setSurname(resultSet.getString(SURNAME));
+            employees.add(employee);
+        }
+        return employees;
+    }
 }
