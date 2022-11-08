@@ -116,7 +116,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public ObservableList<Employee> receiveEmployeeBySurname(String surname) {
-        ObservableList<Employee> employeeBySurname = FXCollections.observableArrayList();
+        ObservableList<Employee> employeeBySurname;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_SURNAME);
             preparedStatement.setString(1, surname + PERCENT_SIGN);
@@ -134,7 +134,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         while (resultSet.next()) {
             Employee employee = new Employee();
-            employee.setIdEmployees(resultSet.getInt(ID_EMPLOYEE));
+            employee.setIdEmployee(resultSet.getInt(ID_EMPLOYEE));
             employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
             employee.setName(resultSet.getString(NAME));
             employee.setSurname(resultSet.getString(SURNAME));
