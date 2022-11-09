@@ -39,7 +39,7 @@ interface of a JavaFX application.
 The application is a simple form with a filter, which displays the given data from the database.
 The 'database table' looks like this:
 
-<h5>
+<h6>
 
 | Column name      | Datatype    | PRIMARY KEY        | NOT NULL            | UNIQUE KEY         | AUTO_INCREMENT     |
 |------------------|-------------|--------------------|---------------------|--------------------|--------------------|
@@ -48,22 +48,26 @@ The 'database table' looks like this:
 | name             | varchar(45) |                    | :white_check_mark:  |                    |                    |
 | surname          | varchar(45) |                    | :white_check_mark:  |                    |                    |
 
-</h5>
+</h6>
 <!-- How it works -->
 
 ## :star2: How it works
 
-Briefly, in the main Application class, the FXMLLoader will load 'basicFXML.fxml' from the jar/classpath, as specified by
-'''FXMLLoader.load(getClass().getResource("BasicFXML.fxml"));'''.
+Briefly, in the main Application class, the FXMLLoader will load `basicFXML.fxml` from the jar/classpath, as specified by
+```java
+FXMLLoader.load(getClass().getResource("BasicFXML.fxml"));
+```
 
-When loading basicFXML.fxml, the loader will find the name of the controller class, as specified by 
-'''fx:controller=" org.scenebuilder.BasicFXMLController"''' in the 'FXML'.
+When loading basicFXML.fxml, the loader will find the name of the controller class, as specified in the `FXML` by
+```java
+fx:controller=" org.scenebuilder.BasicFXMLController"
+```
 
 Then the loader will create an instance of that class, in which it will try to inject all the objects that have an fx:id
 tag in the FXML and are marked with the @FXML annotation in the controller class.
 
 In this sample, the FXMLLoader will create the label based on <Label ... fx:id="label"/>, and it will inject the label
-instance into the '@FXML' private Label label; field.
+instance into the `@FXML` private Label label; field.
 
 The FXMLLoader also parses all the custom event handlers included, like "#handleButtonAction", and it will look for the
 matching methods in the controller that register those action handlers. In this case, @FXML private void
@@ -90,8 +94,22 @@ filtering is launched with the "find" button
 
 <div align="center"> 
   <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee_app_2022-11-08.gif" 
-    alt="screenshot" width="500" height="400" />
+    alt="screenshot" width="600" height="400" />
 </div>
+
+
+<!-- TechStack -->
+### :space_invader: Tech Stack
+
+<details>
+  <summary>Tech Stack</summary>
+  <ul>
+    <li><a href="https://java.com/en//">Java</a></li>
+    <li><a href="https://openjfx.io/">JavaFX</a></li>
+    <li><a href="https://gluonhq.com/products/scene-builder/">Scene Builder</a></li>
+    <li><a href="https://www.mysql.com/">MySQL</a></li>
+  </ul>
+</details>
 
 ### Special thanks:
 
