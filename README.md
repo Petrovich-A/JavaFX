@@ -87,7 +87,7 @@ filtering is launched with the "find" button
 
 <div align="center"> 
   <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee_app_2022-11-08.gif" 
-    alt="screenshot" width="200" height="400" />
+    alt="screenshot" width="400" height="200" />
 </div>
 
 ### Special thanks:
