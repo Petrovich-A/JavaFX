@@ -14,11 +14,10 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
+    * [How it works](#how-it-works)
     * [Screenshots](#camera-screenshots)
     * [Tech Stack](#space_invader-tech-stack)
     * [Features](#dart-features)
-    * [Color Reference](#art-color-reference)
-    * [Environment Variables](#key-environment-variables)
 - [Contributing](#wave-contributing)
     * [Code of Conduct](#scroll-code-of-conduct)
 
@@ -27,6 +26,7 @@
 
 ## Project description
 
+This is a basic project that uses FXML, created with [**IntelliJ IDEA**](https://www.jetbrains.com/idea/) by JetBrains (File -> New -> Project... -> JavaFX ).
 Application designed applying JavaFX. [**JavaFX**](https://docs.oracle.com/javafx/2/overview/jfxpub-overview.htm) is a set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms.
 [**FXML**]() is an XML-based user interface markup language created by Oracle Corporation for defining the user interface of a JavaFX application.
 
@@ -40,11 +40,11 @@ The database table looks like this:
 | name             | varchar(45) |                    | :white_check_mark:  |                    |                    |
 | surname          | varchar(45) |                    | :white_check_mark:  |                    |                    |
 
-This is a basic project that uses FXML, created with NetBeans (New Project -> JavaFX -> JavaFX FXML Application).
+<!-- How it works -->
+## how-it-works
 
-How it works
-
-Briefly, in the main Application class, the FXMLLoader will load basicFXML.fxml from the jar/classpath, as specified by FXMLLoader.load(getClass().getResource("BasicFXML.fxml")).
+Briefly, in the main Application class, the FXMLLoader will load basicFXML.fxml from the jar/classpath, as specified by 
+FXMLLoader.load(getClass().getResource("BasicFXML.fxml")).
 
 When loading basicFXML.fxml, the loader will find the name of the controller class, as specified by fx:controller="org.scenebuilder.BasicFXMLController" in the FXML.
 
@@ -73,7 +73,6 @@ Application allows to show data using the filter in the drop-down list. You need
 <div align="center"> 
   <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee_app_2022-11-08.gif" alt="screenshot" />
 ![](https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee_app_2022-11-08.gif)
-
 </div>
 
 ### Special thanks:
