@@ -42,7 +42,7 @@
                                 style="-fx-background-color: #00CED1;" text="find">
                             <graphic>
                                 <ImageView fitHeight="16.0" fitWidth="16.0">
-                                    <Image url="@icons/search.png"/>
+                                    <Image url="@../../../../icons/search.png"/>
                                 </ImageView>
                             </graphic>
                             <HBox.margin>
