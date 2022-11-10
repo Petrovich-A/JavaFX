@@ -5,17 +5,31 @@ import by.javafx.petrovich.demo.model.Employee;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static by.javafx.petrovich.demo.controller.AlertMessages.*;
-import static by.javafx.petrovich.demo.controller.AlertTitleNames.*;
-import static by.javafx.petrovich.demo.controller.ChoiceBoxItemNames.*;
-import static by.javafx.petrovich.demo.controller.EmployeeFieldsNames.*;
+import static by.javafx.petrovich.demo.controller.AlertMessages.CHOICE_AND_FILL;
+import static by.javafx.petrovich.demo.controller.AlertMessages.INPUT_NUMBER;
+import static by.javafx.petrovich.demo.controller.AlertMessages.NO_CHOICE_ITEM;
+import static by.javafx.petrovich.demo.controller.AlertMessages.NO_INPUT_VALUE;
+import static by.javafx.petrovich.demo.controller.AlertMessages.NO_RESULTS;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.INFORMATION;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.WARNING;
+import static by.javafx.petrovich.demo.controller.FieldNames.ID;
+import static by.javafx.petrovich.demo.controller.FieldNames.NAME;
+import static by.javafx.petrovich.demo.controller.FieldNames.PERSONNEL_NUMBER;
+import static by.javafx.petrovich.demo.controller.FieldNames.SURNAME;
 
 /**
  * @author Petrovich A.V.
@@ -35,19 +49,16 @@ public class ShowEmployeesController implements Initializable {
     private ChoiceBox<String> choice_box;
     @FXML
     private TextField text_field;
-    private final Employee employee = new Employee();
-
-
     private EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
         ArrayList<String> choiceBoxItemNames = initializeChoiceBoxItems();
-        column_id.setCellValueFactory(new PropertyValueFactory<>(ID_EMPLOYEE));
-        column_personnel_number.setCellValueFactory(new PropertyValueFactory<>(PERSONNEL_NUMBER));
-        column_name.setCellValueFactory(new PropertyValueFactory<>(NAME));
-        column_surname.setCellValueFactory(new PropertyValueFactory<>(SURNAME));
+        column_id.setCellValueFactory(new PropertyValueFactory<>(ID.getEmployeeClassFieldsNames()));
+        column_personnel_number.setCellValueFactory(new PropertyValueFactory<>(PERSONNEL_NUMBER.getEmployeeClassFieldsNames()));
+        column_name.setCellValueFactory(new PropertyValueFactory<>(NAME.getEmployeeClassFieldsNames()));
+        column_surname.setCellValueFactory(new PropertyValueFactory<>(SURNAME.getEmployeeClassFieldsNames()));
 
         listEmployee = employeeDaoImpl.receiveAllEmployee();
         table.setItems(listEmployee);
@@ -73,20 +84,21 @@ public class ShowEmployeesController implements Initializable {
                 showAlert(NO_INPUT_VALUE, Alert.AlertType.WARNING, WARNING);
                 return;
             }
-            switch (selectedItem) {
-                case (ID_ITEM) -> {
+            FieldNames fieldNames = getSwitch(selectedItem);
+            switch (fieldNames) {
+                case ID -> {
                     listEmployee = employeeDaoImpl.receiveEmployeeById(Integer.parseInt(searchKeyWord));
                     putItems(listEmployee);
                 }
-                case (PERSONNEL_NUMBER_ITEM) -> {
+                case PERSONNEL_NUMBER -> {
                     listEmployee = employeeDaoImpl.receiveEmployeeByPersonnelNumber(Integer.parseInt(searchKeyWord));
                     putItems(listEmployee);
                 }
-                case (NAME_ITEM) -> {
+                case NAME -> {
                     listEmployee = employeeDaoImpl.receiveEmployeeByName(searchKeyWord);
                     putItems(listEmployee);
                 }
-                case (SURNAME_ITEM) -> {
+                case SURNAME -> {
                     listEmployee = employeeDaoImpl.receiveEmployeeBySurname(searchKeyWord);
                     putItems(listEmployee);
                 }
@@ -102,10 +114,10 @@ public class ShowEmployeesController implements Initializable {
 
     private ArrayList<String> initializeChoiceBoxItems() {
         ArrayList<String> choiceBoxItemNames = new ArrayList<>();
-        choiceBoxItemNames.add(ID_ITEM);
-        choiceBoxItemNames.add(PERSONNEL_NUMBER_ITEM);
-        choiceBoxItemNames.add(NAME_ITEM);
-        choiceBoxItemNames.add(SURNAME_ITEM);
+        choiceBoxItemNames.add(ID.getChoiceBoxItemNames());
+        choiceBoxItemNames.add(PERSONNEL_NUMBER.getChoiceBoxItemNames());
+        choiceBoxItemNames.add(NAME.getChoiceBoxItemNames());
+        choiceBoxItemNames.add(SURNAME.getChoiceBoxItemNames());
         return choiceBoxItemNames;
     }
 
@@ -124,4 +136,14 @@ public class ShowEmployeesController implements Initializable {
         alert.showAndWait();
     }
 
+    public FieldNames getSwitch(String selectedItem) {
+        Optional<FieldNames> enumValueOptional = Arrays.stream(FieldNames.values())
+                .filter(v -> v.getChoiceBoxItemNames().equalsIgnoreCase(selectedItem))
+                .findFirst();
+        if (!enumValueOptional.isPresent()) {
+            throw new RuntimeException();
+        }
+        FieldNames fieldNames = enumValueOptional.get();
+        return fieldNames;
+    }
 }

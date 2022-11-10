@@ -14,7 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static by.javafx.petrovich.demo.dao.DateBaseColumnNames.*;
+import static by.javafx.petrovich.demo.controller.FieldNames.ID;
+import static by.javafx.petrovich.demo.controller.FieldNames.NAME;
+import static by.javafx.petrovich.demo.controller.FieldNames.PERSONNEL_NUMBER;
+import static by.javafx.petrovich.demo.controller.FieldNames.SURNAME;
 
 public class EmployeeDaoImpl implements EmployeeDao {
     private DateBaseUtil dateBaseUtil = new DateBaseUtil();
@@ -90,7 +93,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     /**
-     *
      * @param name
      * @return
      */
@@ -101,9 +103,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_NAME);
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
-           employeesByName = putEmployees(resultSet);
-           LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
-                   "Employee: %s.", name, employeesByName));
+            employeesByName = putEmployees(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
+                    "Employee: %s.", name, employeesByName));
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't receive employee with name %s from date base.", name, e));
         }
@@ -134,10 +136,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         while (resultSet.next()) {
             Employee employee = new Employee();
-            employee.setIdEmployee(resultSet.getInt(ID_EMPLOYEE));
-            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER));
-            employee.setName(resultSet.getString(NAME));
-            employee.setSurname(resultSet.getString(SURNAME));
+            employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
+            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER.getDateBaseColumnNames()));
+            employee.setName(resultSet.getString(NAME.getDateBaseColumnNames()));
+            employee.setSurname(resultSet.getString(SURNAME.getDateBaseColumnNames()));
             employees.add(employee);
         }
         return employees;
