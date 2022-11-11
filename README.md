@@ -1,12 +1,20 @@
+<div align="center">
+  <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee-Management.png" 
+     alt="logo" width="200" height="auto" />
+
+  <h1>Awesome Readme</h1>
+  <p>
+    Employee sort application! 
+  </p>
+
+<!-- Badges -->
 <h4>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">Project description</a>
+    <a href="https://github.com/Petrovich-A/JavaFX#notebook_with_decorative_cover-table-of-contents">Project description</a>
   <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
+    <a href="https://github.com/Petrovich-A/JavaFX/tree/master/src/main/resources/JavaDoc">Documentation</a>
   <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
   </h4>
+</div>
 
 <br />
 
@@ -38,7 +46,7 @@ interface of a JavaFX application.
 The application is a simple form with a filter, which displays the given data from the database.
 The 'database table' looks like this:
 
-<h7>
+<h6>
 
 | Column name      | Datatype    | PRIMARY KEY        | NOT NULL            | UNIQUE KEY         | AUTO_INCREMENT     |
 |------------------|-------------|--------------------|---------------------|--------------------|--------------------|
@@ -47,17 +55,20 @@ The 'database table' looks like this:
 | name             | varchar(45) |                    | :white_check_mark:  |                    |                    |
 | surname          | varchar(45) |                    | :white_check_mark:  |                    |                    |
 
-</h7>
+</h6>
 <!-- How it works -->
 
 ## :star2: How it works
 
-Briefly, in the main Application class, the FXMLLoader will load `basicFXML.fxml` from the jar/classpath, as specified by
+Briefly, in the main Application class, the FXMLLoader will load `basicFXML.fxml` from the jar/classpath, as specified
+by
+
 ```java
 FXMLLoader.load(getClass().getResource("BasicFXML.fxml"));
 ```
 
 When loading basicFXML.fxml, the loader will find the name of the controller class, as specified in the `FXML` by
+
 ```java
 fx:controller=" org.scenebuilder.BasicFXMLController"
 ```
@@ -98,6 +109,7 @@ filtering is launched with the "find" button
 
 
 <!-- TechStack -->
+
 ### :space_invader: Tech Stack
 
 <details>
@@ -111,9 +123,10 @@ filtering is launched with the "find" button
 </details>
 
 <!-- Contributing -->
+
 ## :wave: Contributing
 
-I appreciate your assistance in  in conducting a code review and discussing some issues I encountered. Thank you, buddy. your assistance in providing a considerate code review and discussing some problems I ran into. Thank you, buddy.
+I appreciate your assistance in a code review and discussing some issues I encountered. Thank you, buddy. :sunglasses:
 
 <a href="https://github.com/Khodyko/zapchastiSpring/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Khodyko/zapchastiSpring" />
