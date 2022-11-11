@@ -19,6 +19,9 @@ import static by.javafx.petrovich.demo.controller.FieldNames.NAME;
 import static by.javafx.petrovich.demo.controller.FieldNames.PERSONNEL_NUMBER;
 import static by.javafx.petrovich.demo.controller.FieldNames.SURNAME;
 
+/**
+ * @author Petrovich A.V.
+ */
 public class EmployeeDaoImpl implements EmployeeDao {
     private DateBaseUtil dateBaseUtil = new DateBaseUtil();
     private static final Logger LOGGER = LogManager.getLogger();
@@ -34,9 +37,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private static final String SQL_READ_EMPLOYEE_BY_SURNAME = "SELECT id_employee, personnel_number,name,surname " +
             "FROM employees where surname like ?";
 
-    /**
-     * @return
-     */
+
     @Override
     public ObservableList<Employee> receiveAllEmployee() {
         ObservableList<Employee> allEmployees;
@@ -52,10 +53,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return allEmployees;
     }
 
-    /**
-     * @param id
-     * @return
-     */
+
     @Override
     public ObservableList<Employee> receiveEmployeeById(int id) {
         ObservableList<Employee> employeesById;
@@ -72,10 +70,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employeesById;
     }
 
-    /**
-     * @param personnelNumber
-     * @return
-     */
     @Override
     public ObservableList<Employee> receiveEmployeeByPersonnelNumber(int personnelNumber) {
         ObservableList<Employee> employeeByPersonnelNumber;
@@ -92,10 +86,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employeeByPersonnelNumber;
     }
 
-    /**
-     * @param name
-     * @return
-     */
     @Override
     public ObservableList<Employee> receiveEmployeeByName(String name) {
         ObservableList<Employee> employeesByName;
@@ -112,10 +102,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employeesByName;
     }
 
-    /**
-     * @param surname
-     * @return
-     */
     @Override
     public ObservableList<Employee> receiveEmployeeBySurname(String surname) {
         ObservableList<Employee> employeeBySurname;
@@ -131,7 +117,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
         return employeeBySurname;
     }
-
+    /**
+     * Builds Employee entities received resulting dataset using resultSet and places them to the <code>ObservableList<Employee></code>.
+     *
+     * @param resultSet
+     * @return <code>ObservableList<Employee> employees = FXCollections.observableArrayList();</code>
+     */
     private ObservableList<Employee> putEmployees(ResultSet resultSet) throws SQLException {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         while (resultSet.next()) {

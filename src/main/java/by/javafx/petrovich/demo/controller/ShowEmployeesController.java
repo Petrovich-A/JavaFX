@@ -51,6 +51,12 @@ public class ShowEmployeesController implements Initializable {
     private TextField text_field;
     private EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
 
+    /**
+     * @param url            The location used to resolve relative paths for the root object, or
+     *                       {@code null} if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or {@code null} if
+     *                       the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Employee> listEmployee;
@@ -66,7 +72,9 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     *
+     * <code>onFindButtonClick</code> method executes the main application logic on clicking the Find button. It allows to search
+     * for data about employees in the database and display the results depending on the selected element (field) in the
+     * drop-down list for which the search is performed and the text field in which a user input text to search for.
      */
     @FXML
     protected void onFindButtonClick() {
@@ -112,6 +120,9 @@ public class ShowEmployeesController implements Initializable {
         }
     }
 
+    /**
+     * @return
+     */
     private ArrayList<String> initializeChoiceBoxItems() {
         ArrayList<String> choiceBoxItemNames = new ArrayList<>();
         choiceBoxItemNames.add(ID.getChoiceBoxItemNames());
@@ -121,6 +132,9 @@ public class ShowEmployeesController implements Initializable {
         return choiceBoxItemNames;
     }
 
+    /**
+     * @param listEmployee
+     */
     private void putItems(ObservableList<Employee> listEmployee) {
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
@@ -129,6 +143,11 @@ public class ShowEmployeesController implements Initializable {
         }
     }
 
+    /**
+     * @param alertMessage
+     * @param alertType
+     * @param title
+     */
     private void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -136,6 +155,10 @@ public class ShowEmployeesController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * @param selectedItem
+     * @return
+     */
     public FieldNames getSwitch(String selectedItem) {
         Optional<FieldNames> enumValueOptional = Arrays.stream(FieldNames.values())
                 .filter(v -> v.getChoiceBoxItemNames().equalsIgnoreCase(selectedItem))

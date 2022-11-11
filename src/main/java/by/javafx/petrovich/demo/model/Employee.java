@@ -2,6 +2,10 @@ package by.javafx.petrovich.demo.model;
 
 import java.util.Objects;
 
+/**
+ * Major application entity stored in database.
+ * @author Petrovich A.V.
+ */
 public class Employee {
     int idEmployee;
     int personnelNumber;
@@ -11,6 +15,12 @@ public class Employee {
     public Employee() {
     }
 
+    /**
+     * @param idEmployee
+     * @param personnelNumber
+     * @param name
+     * @param surname
+     */
     public Employee(int idEmployee, int personnelNumber, String name, String surname) {
         this.idEmployee = idEmployee;
         this.personnelNumber = personnelNumber;

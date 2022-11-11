@@ -119,10 +119,6 @@ filtering is launched with the "find" button
 
 I appreciate your help in kind code review. Thanks, guys.
 
-<a href="https://github.com/Louis3797/awesome-readme-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" />
+<a href="https://github.com/Khodyko/awesome-readme-template/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Khodyko/awesome-readme-template" />
 </a>
-
-
-
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Petrovich-A&theme=tokyonight)

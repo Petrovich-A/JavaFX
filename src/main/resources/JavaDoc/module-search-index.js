@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"by.javafx.petrovich.demo"}];updateSearchResults();

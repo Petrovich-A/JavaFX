@@ -1,14 +1,17 @@
 package by.javafx.petrovich.demo.util;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * @author Petrovich A.V.
+ */
 public class PropertyLoader {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PROPERTY_PATH = "jdbc-sql-config.properties";
@@ -22,6 +25,9 @@ public class PropertyLoader {
         readProperties(inputStream);
     }
 
+    /**
+     * @param inputStream
+     */
     private static void readProperties(InputStream inputStream) {
         try {
             PROPERTIES.load(inputStream);
@@ -33,7 +39,11 @@ public class PropertyLoader {
         LOGGER.log(Level.INFO, "Reading property file successful.");
     }
 
-    public String get(String propertyName) {
+    /**
+     * @param propertyName
+     * @return
+     */
+    public String receive(String propertyName) {
         return PROPERTIES.getProperty(propertyName);
     }
 }

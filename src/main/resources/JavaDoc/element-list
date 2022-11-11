@@ -1,0 +1,7 @@
+module:by.javafx.petrovich.demo
+by.javafx.petrovich.demo
+by.javafx.petrovich.demo.controller
+by.javafx.petrovich.demo.dao
+by.javafx.petrovich.demo.dao.impl
+by.javafx.petrovich.demo.model
+by.javafx.petrovich.demo.util
