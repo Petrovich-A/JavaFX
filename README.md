@@ -18,7 +18,6 @@
     * [How it works](#how-it-works)
     * [Screenshots](#camera-screenshots)
     * [Tech Stack](#space_invader-tech-stack)
-    * [Features](#dart-features)
 - [Contributing](#wave-contributing)
     * [Code of Conduct](#scroll-code-of-conduct)
 
@@ -39,7 +38,7 @@ interface of a JavaFX application.
 The application is a simple form with a filter, which displays the given data from the database.
 The 'database table' looks like this:
 
-<h6>
+<h7>
 
 | Column name      | Datatype    | PRIMARY KEY        | NOT NULL            | UNIQUE KEY         | AUTO_INCREMENT     |
 |------------------|-------------|--------------------|---------------------|--------------------|--------------------|
@@ -48,7 +47,7 @@ The 'database table' looks like this:
 | name             | varchar(45) |                    | :white_check_mark:  |                    |                    |
 | surname          | varchar(45) |                    | :white_check_mark:  |                    |                    |
 
-</h6>
+</h7>
 <!-- How it works -->
 
 ## :star2: How it works
@@ -111,13 +110,10 @@ filtering is launched with the "find" button
   </ul>
 </details>
 
-### Special thanks:
-
 <!-- Contributing -->
-
 ## :wave: Contributing
 
-I appreciate your help in kind code review. Thanks, guys.
+I appreciate your assistance in  in conducting a code review and discussing some issues I encountered. Thank you, buddy. your assistance in providing a considerate code review and discussing some problems I ran into. Thank you, buddy.
 
 <a href="https://github.com/Khodyko/zapchastiSpring/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Khodyko/zapchastiSpring" />
