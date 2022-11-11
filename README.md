@@ -1,12 +1,9 @@
 <div align="center">
   <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee-Management.png" 
-     alt="logo" width="200" height="auto" />
+     alt="logo" width="400" height="auto" />
 
-  <h1>Awesome Readme</h1>
-  <p>
-    Employee sort application! 
-  </p>
-
+  <h2>Employee sort application</h2>
+  <br />
 <!-- Badges -->
 <h4>
     <a href="https://github.com/Petrovich-A/JavaFX#notebook_with_decorative_cover-table-of-contents">Project description</a>
