@@ -1,16 +1,19 @@
 <div align="center">
   <img src="https://github.com/Petrovich-A/JavaFX/blob/master/gif/Employee-Management.png" 
      alt="logo" width="400" height="auto" />
-
   <h2>Employee sort application</h2>
   <br />
 <!-- Badges -->
+<p>
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/Petrovich-A/JavaFX">
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Petrovich-A/JavaFX">
+</p>
+
 <h4>
     <a href="https://github.com/Petrovich-A/JavaFX#notebook_with_decorative_cover-table-of-contents">Project description</a>
   <span> · </span>
     <a href="https://github.com/Petrovich-A/JavaFX/tree/master/src/main/resources/JavaDoc">Documentation</a>
-  <span> · </span>
-  </h4>
+</h4>
 </div>
 
 <br />
@@ -23,6 +26,9 @@
     * [How it works](#how-it-works)
     * [Screenshots](#camera-screenshots)
     * [Tech Stack](#space_invader-tech-stack)
+- [Getting Started](#toolbox-getting-started)
+  * [Run Locally](#running-run-locally)
+  * [Create a database](#create-a-database)
 - [Contributing](#wave-contributing)
     * [Code of Conduct](#scroll-code-of-conduct)
 
@@ -119,11 +125,24 @@ filtering is launched with the "find" button
   </ul>
 </details>
 
-<!-- Contributing -->
 
+<!-- Getting Started -->
+## 	:toolbox: Getting Started
+
+<!-- Run Locally -->
+### :running: Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Petrovich-A/JavaFX.git
+```
+
+<!-- Contributing -->
 ## :wave: Contributing
 
-I appreciate your assistance in a code review and discussing some issues I encountered. Thank you, buddy. :sunglasses:
+I appreciate your assistance in a code review n discussing some issues I encountered with.
+Thank you, buddy. :sunglasses:
 
 <a href="https://github.com/Khodyko/zapchastiSpring/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Khodyko/zapchastiSpring" />
