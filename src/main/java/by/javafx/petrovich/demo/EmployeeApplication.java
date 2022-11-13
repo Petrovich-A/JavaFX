@@ -6,6 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * @author Petrovich A.V.
  *
@@ -21,7 +26,9 @@ public class EmployeeApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(EmployeeApplication.class.getResource("employeeSort.fxml"));
-        Image image = new Image("bussiness-man.png");
+        Path path = Paths.get("src/main/resources/icons/bussiness-man.png");
+        InputStream inputStream = new FileInputStream(path.toFile());
+        Image image = new Image(inputStream);
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setScene(scene);
         stage.setTitle("Employee app");
