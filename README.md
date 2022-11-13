@@ -20,8 +20,8 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
-  * [How it works](#how-it-works)
-  * [Introducing FMXL](#introducing-FMXL)
+  * [How it works](#star2-how-it-works)
+  * [Introducing FMXL](#art-Introducing FMXL)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
 - [Getting Started](#toolbox-getting-started)
@@ -54,7 +54,7 @@ this app represents a simple form with a filter, which displays the given data f
 The filter allows you to display the results of a SQL query and retrieve an employee list based on the text request and the item (id, personnel number, name, surname) you select from a drop-down list.
 
 <!-- How it works -->
-## :star2: How it works
+### :star2: How it works
 
 Each application created with JavaFX consists of a hierarchy of some basic components. Stages, scenes, and nodes. Stage basically represents a window. Your application can have multiple stages, but needs at least one. A scene represents the contents of a stage. Each stage can have multiple scenes, which you can switch. Imagine a theater stage switching multiple scenes during a play. Each scene can contain various components, which are called nodes. These can be controls like buttons or labels or even layouts, which can contain multiple nested components. Each scene can have one nested node, but it can be a layout, which can host multiple components. The nesting can be multiple levels deep - layouts can contain other layouts and regular components.
 Simply put, each application can have multiple stages - windows. Each stage can switch multiple scenes. Scenes contain nodes - layouts and regular components.
@@ -81,7 +81,7 @@ stage.show();
 }
 ```
 <!-- Introducing FMXL -->
-## :art: Introducing FMXL
+### :art: Introducing FMXL
 
 in addition to the procedural construction of your UI, we can use declarative XML markup. It turns out XML's hierarchical structure is a great way to describe a hierarchy of components in the user interface.
 This XML format specific to JavaFX is called [**FXML**](https://docs.oracle.com/javase/8/javafx/api/javafx/fxml/doc-files/introduction_to_fxml.html). Here you can define all your components and their properties and link it with a Controller, which is responsible for managing interactions.
