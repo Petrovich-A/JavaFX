@@ -21,7 +21,7 @@
 
 - [About the Project](#star2-about-the-project)
   * [How it works](#star2-how-it-works)
-  * [Introducing FMXL](#art-Introducing FMXL)
+  * [Introducing FMXL](#art-Introducing-FMXL)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
 - [Getting Started](#toolbox-getting-started)
