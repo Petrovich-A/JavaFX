@@ -34,10 +34,10 @@
 
 ## :memo: Project description
 
-This is a basic project on **Java** digned applying JavaFX [**JavaFX**](https://docs.oracle.com/javafx/2/overview/jfxpub-overview.htm) and [**IntelliJ IDEA**](https://www.jetbrains.com/idea/) by JetBrains
-File -> New -> Project... -> JavaFX ). JavaFX is a toolkit [**GUI**](https://en.wikipedia.org/wiki/Graphical_user_interface) (Graphical user interface) for Java. Another words, JavaFX is a
+This is a basic project on **Java** digned applying [**JavaFX**](https://docs.oracle.com/javafx/2/overview/jfxpub-overview.htm) and [**IntelliJ IDEA**](https://www.jetbrains.com/idea/) by JetBrains
+`File -> New -> Project... -> JavaFX`. JavaFX is a toolkit [**GUI**](https://en.wikipedia.org/wiki/Graphical_user_interface) (Graphical user interface) for Java. In other words, JavaFX is a
 set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms.
-this app represents a simple form with a filter, which displays the given data from the database. The 'database table' looks like this:
+This app represents a simple form with a filter, which displays the given data from the database. The `database table` looks like this:
 
 <h6>
 
@@ -50,7 +50,7 @@ this app represents a simple form with a filter, which displays the given data f
 
 </h6>
 
-The filter allows you to display the results of a SQL query and retrieve an employee list based on the text request and
+The filter allows you to display the results of a `SQL` query and retrieve an employee list based on the text request and
 the item (id, personnel number, name, surname) you select from a drop-down list. The "find" button launches the filtering process.
 
 <!-- How it works -->
@@ -58,7 +58,7 @@ the item (id, personnel number, name, surname) you select from a drop-down list.
 
 Each application created with JavaFX consists of a hierarchy of some basic components:
 * stages;
-* scenes
+* scenes;
 * nodes.
 
 Stage basically represents a window. Application can have multiple stages, but needs at least one. A scene represents the contents 
