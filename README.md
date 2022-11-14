@@ -37,7 +37,7 @@
 This is a basic project on **Java** digned applying JavaFX [**JavaFX**](https://docs.oracle.com/javafx/2/overview/jfxpub-overview.htm) and [**IntelliJ IDEA**](https://www.jetbrains.com/idea/) by JetBrains
 File -> New -> Project... -> JavaFX ). JavaFX is a toolkit [**GUI**](https://en.wikipedia.org/wiki/Graphical_user_interface) (Graphical user interface) for Java. Another words, JavaFX is a
 set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms.
-this app represents a simple form with a filter, which displays the given data from the database. The 'database table' looks like this:
+This app represents a simple form with a filter, which displays the given data from the database. The 'database table' looks like this:
 
 <h6>
 
