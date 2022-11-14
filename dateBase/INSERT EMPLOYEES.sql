@@ -1,0 +1,22 @@
+insert into employees (personnel_number,name,surname) values (42901, 'Анастасия', 'Смирнова');
+insert into employees (personnel_number,name,surname) values (42902, 'Анжелика', 'Иванова');
+insert into employees (personnel_number,name,surname) values (42903, 'Анжелика', 'Яковлева');
+insert into employees (personnel_number,name,surname) values (42904, 'Анна', 'Кузнецова');
+insert into employees (personnel_number,name,surname) values (42905, 'Анна', 'Герасимова');
+insert into employees (personnel_number,name,surname) values (42906, 'Светлана', 'Кузнецова');
+insert into employees (personnel_number,name,surname) values (42907, 'Валентина', 'Соколова');
+insert into employees (personnel_number,name,surname) values (42908, 'Валерия', 'Попова');
+insert into employees (personnel_number,name,surname) values (42909, 'Вера', 'Лебедева');
+insert into employees (personnel_number,name,surname) values (42910, 'Вероника', 'Новикова');
+insert into employees (personnel_number,name,surname) values (42911, 'Александр', 'Петров');
+insert into employees (personnel_number,name,surname) values (42912, 'Роман', 'Петров');
+insert into employees (personnel_number,name,surname) values (42913, 'Алексей', 'Волков');
+insert into employees (personnel_number,name,surname) values (42914, 'Андрей', 'Соловьёв');
+insert into employees (personnel_number,name,surname) values (42915, 'Антон', 'Васильев');
+insert into employees (personnel_number,name,surname) values (42916, 'Вадим', 'Зайцев');
+insert into employees (personnel_number,name,surname) values (42917, 'Валерий', 'Павлов');
+insert into employees (personnel_number,name,surname) values (42918, 'Валерий', 'Павлов');
+insert into employees (personnel_number,name,surname) values (42919, 'Владимир', 'Тарасов');
+insert into employees (personnel_number,name,surname) values (42920, 'Владимир', 'Белов');
+insert into employees (personnel_number,name,surname) values (42921, 'Владимир', 'Большаков');
+ 
