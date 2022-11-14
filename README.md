@@ -20,16 +20,14 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#zap-about-the-project)
-  * [Project description](#memo-зroject-description)
+  * [Project description](#memo-project-description)
   * [How it works](#construction_worker-how-it-works)
   * [Introducing FMXL](#art-Introducing-FMXL)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#pushpin-tech-stack)
 - [Getting Started](#toolbox-getting-started)
   * [Run Locally](#running-run-locally)
-  * [Create a database](#create-a-database)
 - [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
 
 <!-- About the Project -->
 ## :zap: About the Project
