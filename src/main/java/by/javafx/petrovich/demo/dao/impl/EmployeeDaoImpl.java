@@ -40,8 +40,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM);
             ResultSet resultSet = preparedStatement.executeQuery();
             allEmployees = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading all Employees from date base have done successfully. " +
-                    "allEmployees: %s", allEmployees));
+            LOGGER.log(Level.INFO, "Reading all Employees from date base have done successfully. " +
+                    "allEmployees: {0}", allEmployees);
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't find all employees from date base. %s", e));
         }
@@ -57,8 +57,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeById = employeeMapper(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %d have done successfully. " +
-                    "Employee: %s.", id, employeeById));
+            LOGGER.log(Level.INFO, "Reading Employee from date base with id {0} have done successfully. " +
+                    "Employee: {1}.", id, employeeById);
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't find employee with id %d from date base. %s", id, e));
         }
@@ -73,8 +73,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeByPersonnelNumber = employeeMapper(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with personnelNumber %s have done successfully. " +
-                    "Employee: %s.", personnelNumber, employeeByPersonnelNumber));
+            LOGGER.log(Level.INFO, "Reading Employee from date base with personnelNumber {0} have done successfully. " +
+                    "Employee: {1}.", personnelNumber, employeeByPersonnelNumber);
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't find employee with personnelNumber %s from date base. %s", personnelNumber, e));
         }
@@ -89,8 +89,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeesByName = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
-                    "Employee: %s.", name, employeesByName));
+            LOGGER.log(Level.INFO, "Reading Employee from date base with name {0} have done successfully. " +
+                    "Employee: {1}.", name, employeesByName);
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't find employee with name %s from date base. %s", name, e));
         }
@@ -105,8 +105,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setString(1, surname + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeBySurname = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
-                    "Employee: %s.", surname, employeeBySurname));
+            LOGGER.log(Level.INFO, "Reading Employee from date base with name {0} have done successfully. " +
+                    "Employee: {1}.", surname, employeeBySurname);
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't find employee with surname %s from date base. %s", surname, e));
         }
