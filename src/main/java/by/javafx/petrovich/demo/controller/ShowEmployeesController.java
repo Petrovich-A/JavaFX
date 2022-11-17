@@ -50,7 +50,7 @@ public class ShowEmployeesController implements Initializable {
     private ChoiceBox<String> choice_box;
     @FXML
     private TextField text_field;
-    private EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
+    private final EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
 
     /**
      * @param url            The location used to resolve relative paths for the root object, or
@@ -60,14 +60,12 @@ public class ShowEmployeesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Employee> listEmployee;
-        ArrayList<String> choiceBoxItemNames = initializeChoiceBoxItems();
+        ArrayList<String> choiceBoxItemNames = populateChoiceBoxItems();
         column_id.setCellValueFactory(new PropertyValueFactory<>(ID.getEmployeeClassFieldsNames()));
         column_personnel_number.setCellValueFactory(new PropertyValueFactory<>(PERSONNEL_NUMBER.getEmployeeClassFieldsNames()));
         column_name.setCellValueFactory(new PropertyValueFactory<>(NAME.getEmployeeClassFieldsNames()));
         column_surname.setCellValueFactory(new PropertyValueFactory<>(SURNAME.getEmployeeClassFieldsNames()));
-
-        listEmployee = employeeDaoImpl.findAllEmployees();
+        ObservableList<Employee> listEmployee = employeeDaoImpl.findAllEmployees();
         table.setItems(listEmployee);
         choiceBoxItemNames.forEach((itemName) -> choice_box.getItems().add(itemName));
     }
@@ -93,23 +91,23 @@ public class ShowEmployeesController implements Initializable {
                 showAlert(NO_INPUT_VALUE, Alert.AlertType.WARNING, WARNING);
                 return;
             }
-            FieldNames fieldNames = getSwitch(selectedItem);
+            FieldNames fieldNames = defineEnumElement(selectedItem);
             switch (fieldNames) {
                 case ID -> {
                     listEmployee.add(employeeDaoImpl.findEmployeeById(Integer.parseInt(searchKeyWord)));
-                    putItems(listEmployee);
+                    populateTable(listEmployee);
                 }
                 case PERSONNEL_NUMBER -> {
                     listEmployee.add(employeeDaoImpl.findEmployeeByPersonnelNumber(Integer.parseInt(searchKeyWord)));
-                    putItems(listEmployee);
+                    populateTable(listEmployee);
                 }
                 case NAME -> {
                     listEmployee = employeeDaoImpl.findEmployeesByName(searchKeyWord);
-                    putItems(listEmployee);
+                    populateTable(listEmployee);
                 }
                 case SURNAME -> {
                     listEmployee = employeeDaoImpl.findEmployeesBySurname(searchKeyWord);
-                    putItems(listEmployee);
+                    populateTable(listEmployee);
                 }
                 default -> {
                 }
@@ -122,9 +120,10 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @return
+     * Fill the ChoiceBox on UI with items for selecting by them.
+     * @return choiceBoxItemNames <code>ArrayList<String></code> list of items
      */
-    private ArrayList<String> initializeChoiceBoxItems() {
+    private ArrayList<String> populateChoiceBoxItems() {
         ArrayList<String> choiceBoxItemNames = new ArrayList<>();
         choiceBoxItemNames.add(ID.getChoiceBoxItemNames());
         choiceBoxItemNames.add(PERSONNEL_NUMBER.getChoiceBoxItemNames());
@@ -134,9 +133,9 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @param listEmployee
+     * @param listEmployee <code>ObservableList<Employee></code>
      */
-    private void putItems(ObservableList<Employee> listEmployee) {
+    private void populateTable(ObservableList<Employee> listEmployee) {
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
         } else {
@@ -145,9 +144,16 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @param alertMessage
-     * @param alertType
-     * @param title
+     * @param alertMessage String information contains a sense of the alert message, viewed on UI
+     * @param alertType Alert is a part of JavaFX, so it is a subclass of Dialog class. Alerts are some predefined dialogs that are used to show some information to the user.
+     *                  Alerts are basically of specific alert types:
+     *                  <ul>
+     *                      <li> CONFIRMATION alert
+     *                      <li> WARNING alert
+     *                      <li> INFORMATION alert
+     *                      <li> ERROR alert
+     *                  </ul>
+     * @param title The title of the alert window
      */
     private void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
         Alert alert = new Alert(alertType);
@@ -157,17 +163,16 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @param selectedItem
-     * @return
+     * @param selectedItem The item (id, personnel number, name, surname) selected in dropdown list in ChoiceBox on UI
+     * @return <code>FieldNames fieldNames</code> The name of the selected item
      */
-    public FieldNames getSwitch(String selectedItem) {
+    public FieldNames defineEnumElement(String selectedItem) {
         Optional<FieldNames> enumValueOptional = Arrays.stream(FieldNames.values())
                 .filter(v -> v.getChoiceBoxItemNames().equalsIgnoreCase(selectedItem))
                 .findFirst();
-        if (!enumValueOptional.isPresent()) {
+        if (enumValueOptional.isEmpty()) {
             throw new RuntimeException();
         }
-        FieldNames fieldNames = enumValueOptional.get();
-        return fieldNames;
+        return enumValueOptional.get();
     }
 }
