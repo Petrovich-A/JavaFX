@@ -18,30 +18,30 @@ public enum FieldNames {
     PERSONNEL_NUMBER("personnelNumber", "personnel number", "personnel_number"),
     NAME("name", "name", "name"),
     SURNAME("surname", "surname", "surname");
-    private String EmployeeClassFieldsNames;
-    private String ChoiceBoxItemNames;
-    private String DateBaseColumnNames;
+    private final String employeeClassFieldsNames;
+    private final String choiceBoxItemNames;
+    private final String dateBaseColumnNames;
 
     /**
-     * @param employeeClassFieldsNames
-     * @param choiceBoxItemNames
-     * @param dateBaseColumnNames
+     * @param employeeClassFieldsNames for the UI (JavaFX) as <code>EmployeeClassFieldsNames</code>
+     * @param choiceBoxItemNames for populating the dropdown list on the UI as <code>ChoiceBoxItemNames</code>
+     * @param dateBaseColumnNames for the database field names (MuSQL) as <code>DateBaseColumnNames</code>.
      */
     FieldNames(String employeeClassFieldsNames, String choiceBoxItemNames, String dateBaseColumnNames) {
-        EmployeeClassFieldsNames = employeeClassFieldsNames;
-        ChoiceBoxItemNames = choiceBoxItemNames;
-        DateBaseColumnNames = dateBaseColumnNames;
+        this.employeeClassFieldsNames = employeeClassFieldsNames;
+        this.choiceBoxItemNames = choiceBoxItemNames;
+        this.dateBaseColumnNames = dateBaseColumnNames;
     }
 
     public String getEmployeeClassFieldsNames() {
-        return EmployeeClassFieldsNames;
+        return employeeClassFieldsNames;
     }
 
     public String getChoiceBoxItemNames() {
-        return ChoiceBoxItemNames;
+        return choiceBoxItemNames;
     }
 
     public String getDateBaseColumnNames() {
-        return DateBaseColumnNames;
+        return dateBaseColumnNames;
     }
 }
