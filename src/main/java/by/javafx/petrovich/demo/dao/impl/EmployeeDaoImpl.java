@@ -30,8 +30,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private static final String FROM = "FROM employees ";
     private static final String WHERE_ID = "where id_employee = ?";
     private static final String WHERE_PERSONNEL_NUMBER = "where personnel_number = ?";
-    private static final String WHERE_NAME = "where name like ?";
-    private static final String WHERE_SURNAME = "where surname like ?";
+    private static final String WHERE_NAME_LIKE = "where name like ?";
+    private static final String WHERE_SURNAME_LIKE = "where surname like ?";
 
     @Override
     public ObservableList<Employee> findAllEmployees() {
@@ -40,10 +40,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM);
             ResultSet resultSet = preparedStatement.executeQuery();
             allEmployees = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, "Reading all Employees from date base have done successfully. " +
-                    "allEmployees: {0}", allEmployees);
+            LOGGER.log(Level.INFO, "Reading all Employees from database have done successfully. allEmployees: {}", allEmployees);
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't find all employees from date base. %s", e));
+            throw new RuntimeException("Method findAllEmployees has failed.", e);
         }
         return allEmployees;
     }
@@ -57,10 +56,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeById = employeeMapper(resultSet);
-            LOGGER.log(Level.INFO, "Reading Employee from date base with id {0} have done successfully. " +
-                    "Employee: {1}.", id, employeeById);
+            LOGGER.log(Level.INFO, "Reading Employee from date base with id {} have done successfully. " +
+                    "Employee: {}.", id, employeeById);
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't find employee with id %d from date base. %s", id, e));
+            throw new RuntimeException("Тo database access", e);
         }
         return employeeById;
     }
@@ -76,7 +75,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             LOGGER.log(Level.INFO, "Reading Employee from date base with personnelNumber {0} have done successfully. " +
                     "Employee: {1}.", personnelNumber, employeeByPersonnelNumber);
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't find employee with personnelNumber %s from date base. %s", personnelNumber, e));
+            throw new RuntimeException("Тo database access", e);
         }
         return employeeByPersonnelNumber;
     }
@@ -85,14 +84,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public ObservableList<Employee> findEmployeesByName(String name) {
         ObservableList<Employee> employeesByName;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_NAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_NAME_LIKE);
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeesByName = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, "Reading Employee from date base with name {0} have done successfully. " +
-                    "Employee: {1}.", name, employeesByName);
+            LOGGER.log(Level.INFO, "Reading Employee from date base with name {} have done successfully. " +
+                    "Employee: {}.", name, employeesByName);
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't find employee with name %s from date base. %s", name, e));
+            throw new RuntimeException("Тo database access", e);
         }
         return employeesByName;
     }
@@ -101,17 +100,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public ObservableList<Employee> findEmployeesBySurname(String surname) {
         ObservableList<Employee> employeeBySurname;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM +WHERE_SURNAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_SURNAME_LIKE);
             preparedStatement.setString(1, surname + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeBySurname = employeesMapper(resultSet);
-            LOGGER.log(Level.INFO, "Reading Employee from date base with name {0} have done successfully. " +
-                    "Employee: {1}.", surname, employeeBySurname);
+            LOGGER.log(Level.INFO, "Reading Employee from date base with name {} have done successfully. " +
+                    "Employee: {}.", surname, employeeBySurname);
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't find employee with surname %s from date base. %s", surname, e));
+            throw new RuntimeException("Тo database access", e);
         }
         return employeeBySurname;
     }
+
     /**
      * Builds Employee entities received resulting dataset using resultSet and places them to the <code>ObservableList<Employee></code>.
      *
@@ -120,24 +120,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private ObservableList<Employee> employeesMapper(ResultSet resultSet) throws SQLException {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         while (resultSet.next()) {
-            Employee employee = new Employee();
-            employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
-            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER.getDateBaseColumnNames()));
-            employee.setName(resultSet.getString(NAME.getDateBaseColumnNames()));
-            employee.setSurname(resultSet.getString(SURNAME.getDateBaseColumnNames()));
-            employees.add(employee);
+            employees.add(populateEmployee(resultSet));
         }
         return employees;
     }
 
     private Employee employeeMapper(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
+        Employee employee = null;
         while (resultSet.next()) {
-            employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
-            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER.getDateBaseColumnNames()));
-            employee.setName(resultSet.getString(NAME.getDateBaseColumnNames()));
-            employee.setSurname(resultSet.getString(SURNAME.getDateBaseColumnNames()));
+            employee = populateEmployee(resultSet);
         }
+        return employee;
+    }
+
+    private Employee populateEmployee(ResultSet resultSet) throws SQLException {
+        Employee employee = new Employee();
+        employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
+        employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER.getDateBaseColumnNames()));
+        employee.setName(resultSet.getString(NAME.getDateBaseColumnNames()));
+        employee.setSurname(resultSet.getString(SURNAME.getDateBaseColumnNames()));
         return employee;
     }
 }
