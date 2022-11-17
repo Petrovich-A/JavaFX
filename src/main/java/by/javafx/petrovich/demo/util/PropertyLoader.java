@@ -32,9 +32,9 @@ public class PropertyLoader {
         try {
             PROPERTIES.load(inputStream);
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.FATAL, String.format("Properties file not found: %s. %s", e.getMessage(), e));
+            LOGGER.log(Level.ERROR, String.format("Properties file not found: %s. %s", e.getMessage(), e));
         } catch (IOException e) {
-            LOGGER.log(Level.FATAL, String.format("Reading database properties failed: %s. %s", e.getMessage(), e));
+            LOGGER.log(Level.ERROR, String.format("Reading database properties failed: %s. %s", e.getMessage(), e));
         }
         LOGGER.log(Level.INFO, "Reading property file successful.");
     }

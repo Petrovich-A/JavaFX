@@ -39,11 +39,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM);
             ResultSet resultSet = preparedStatement.executeQuery();
-            allEmployees = putEmployees(resultSet);
+            allEmployees = employeesMapper(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading all Employees from date base have done successfully. " +
                     "allEmployees: %s", allEmployees));
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't receive all employees from date base.", e));
+            throw new RuntimeException(String.format("Can't find all employees from date base. %s", e));
         }
         return allEmployees;
     }
@@ -56,11 +56,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeeById = putEmployee(resultSet);
-            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %s have done successfully. " +
+            employeeById = employeeMapper(resultSet);
+            LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %d have done successfully. " +
                     "Employee: %s.", id, employeeById));
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't receive employee with id %s from date base.", id, e));
+            throw new RuntimeException(String.format("Can't find employee with id %d from date base. %s", id, e));
         }
         return employeeById;
     }
@@ -72,11 +72,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_PERSONNEL_NUMBER);
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeeByPersonnelNumber = putEmployee(resultSet);
+            employeeByPersonnelNumber = employeeMapper(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with personnelNumber %s have done successfully. " +
                     "Employee: %s.", personnelNumber, employeeByPersonnelNumber));
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't receive employee with personnelNumber %s from date base.", personnelNumber, e));
+            throw new RuntimeException(String.format("Can't find employee with personnelNumber %s from date base. %s", personnelNumber, e));
         }
         return employeeByPersonnelNumber;
     }
@@ -88,11 +88,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_NAME);
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeesByName = putEmployees(resultSet);
+            employeesByName = employeesMapper(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
                     "Employee: %s.", name, employeesByName));
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't receive employee with name %s from date base.", name, e));
+            throw new RuntimeException(String.format("Can't find employee with name %s from date base. %s", name, e));
         }
         return employeesByName;
     }
@@ -104,11 +104,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM +WHERE_SURNAME);
             preparedStatement.setString(1, surname + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeeBySurname = putEmployees(resultSet);
+            employeeBySurname = employeesMapper(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with name %s have done successfully. " +
                     "Employee: %s.", surname, employeeBySurname));
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Can't receive employee with surname %s from date base.", surname, e));
+            throw new RuntimeException(String.format("Can't find employee with surname %s from date base. %s", surname, e));
         }
         return employeeBySurname;
     }
@@ -118,7 +118,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
      * @param resultSet
      * @return <code>ObservableList<Employee> employees = FXCollections.observableArrayList();</code>
      */
-    private ObservableList<Employee> putEmployees(ResultSet resultSet) throws SQLException {
+    private ObservableList<Employee> employeesMapper(ResultSet resultSet) throws SQLException {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
         while (resultSet.next()) {
             Employee employee = new Employee();
@@ -131,7 +131,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employees;
     }
 
-    private Employee putEmployee(ResultSet resultSet) throws SQLException {
+    private Employee employeeMapper(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee();
         while (resultSet.next()) {
             employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
