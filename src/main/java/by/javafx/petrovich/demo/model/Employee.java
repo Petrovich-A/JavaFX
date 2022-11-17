@@ -7,10 +7,10 @@ import java.util.Objects;
  * @author Petrovich A.V.
  */
 public class Employee {
-    int idEmployee;
-    int personnelNumber;
-    String name;
-    String surname;
+    private int idEmployee;
+    private int personnelNumber;
+    private String name;
+    private String surname;
 
     public Employee() {
     }
