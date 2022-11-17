@@ -30,7 +30,7 @@ public class DateBaseUtil implements Initializable {
         if (connection == null) {
             try {
                 Class.forName(JDBC_DRIVER_NAME);
-                connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, PASSWORD);
+                Connection connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, PASSWORD);
                 LOGGER.log(Level.INFO, "Connection established.");
                 return connection;
             } catch (Exception e) {
