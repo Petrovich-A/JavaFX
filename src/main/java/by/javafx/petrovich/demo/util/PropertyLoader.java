@@ -20,28 +20,30 @@ public class PropertyLoader {
     static {
         InputStream inputStream = PropertyLoader.class.getClassLoader().getResourceAsStream(PROPERTY_PATH);
         if (inputStream == null) {
-            LOGGER.log(Level.FATAL, String.format("%s file does not exist, initialization failed.", PROPERTY_PATH));
+            LOGGER.log(Level.FATAL, "File does not exist, initialization failed.", PROPERTY_PATH);
         }
         readProperties(inputStream);
     }
 
     /**
-     * @param inputStream
+     * Read data from file
+     *
+     * @param inputStream link to file as a String
      */
     private static void readProperties(InputStream inputStream) {
         try {
             PROPERTIES.load(inputStream);
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.ERROR, String.format("Properties file not found: %s. %s", e.getMessage(), e));
+            LOGGER.log(Level.ERROR, "Properties file not found", e.getMessage());
         } catch (IOException e) {
-            LOGGER.log(Level.ERROR, String.format("Reading database properties failed: %s. %s", e.getMessage(), e));
+            LOGGER.log(Level.ERROR, "Reading database properties failed", e.getMessage());
         }
         LOGGER.log(Level.INFO, "Reading property file successful.");
     }
 
     /**
-     * @param propertyName
-     * @return
+     * @param propertyName name of key in Properties file
+     * @return receive value
      */
     public String receive(String propertyName) {
         return PROPERTIES.getProperty(propertyName);
