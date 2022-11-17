@@ -23,7 +23,7 @@ import static by.javafx.petrovich.demo.controller.FieldNames.SURNAME;
  * @author Petrovich A.V.
  */
 public class EmployeeDaoImpl implements EmployeeDao {
-    private DateBaseUtil dateBaseUtil = new DateBaseUtil();
+    private final DateBaseUtil dateBaseUtil = new DateBaseUtil();
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PERCENT_SIGN = "%";
     private static final String SELECT_ALL = "SELECT id_employee, personnel_number, name, surname ";
@@ -68,7 +68,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public Employee findEmployeeByPersonnelNumber(int personnelNumber) {
         Employee employeeByPersonnelNumber;
-        try (Connection connection = dateBaseUtil.receiveConnection();) {
+        try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_PERSONNEL_NUMBER);
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -115,7 +115,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
     /**
      * Builds Employee entities received resulting dataset using resultSet and places them to the <code>ObservableList<Employee></code>.
      *
-     * @param resultSet
      * @return <code>ObservableList<Employee> employees = FXCollections.observableArrayList();</code>
      */
     private ObservableList<Employee> employeesMapper(ResultSet resultSet) throws SQLException {
