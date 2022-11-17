@@ -13,23 +13,23 @@ public interface EmployeeDao {
      *
      * @return <code>ObservableList<Employee> allEmployees;</code>
      */
-    ObservableList<Employee> receiveAllEmployee();
+    ObservableList<Employee> findAllEmployees();
 
     /**
      * Receives list of Employees with definite id.
      *
      * @param id
-     * @return <code>ObservableList<Employee> employeeByPersonnelNumber;</code>
+     * @return <code>Employee employeeByPersonnelNumber;</code>
      */
-    ObservableList<Employee> receiveEmployeeById(int id);
+    Employee findEmployeeById(int id);
 
     /**
      * Receives list of Employees with definite personnelNumber.
      *
      * @param personnelNumber
-     * @return <code>ObservableList<Employee> employeeByPersonnelNumber;</code>
+     * @return <code>Employee employeeByPersonnelNumber;</code>
      */
-    ObservableList<Employee> receiveEmployeeByPersonnelNumber(int personnelNumber);
+    Employee findEmployeeByPersonnelNumber(int personnelNumber);
 
     /**
      * Receives list of Employees with definite name.
@@ -37,7 +37,7 @@ public interface EmployeeDao {
      * @param name
      * @return <code>ObservableList<Employee> employeesByName;</code>
      */
-    ObservableList<Employee> receiveEmployeeByName(String name);
+    ObservableList<Employee> findEmployeesByName(String name);
 
     /**
      * Receives list of Employees with definite surname.
@@ -45,6 +45,6 @@ public interface EmployeeDao {
      * @param surname
      * @return <code>ObservableList<Employee> employeeBySurname;</code>
      */
-    ObservableList<Employee> receiveEmployeeBySurname(String surname);
+    ObservableList<Employee> findEmployeesBySurname(String surname);
 
 }

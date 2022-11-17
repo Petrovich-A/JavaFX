@@ -39,7 +39,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     @Override
-    public ObservableList<Employee> receiveAllEmployee() {
+    public ObservableList<Employee> findAllEmployees() {
         ObservableList<Employee> allEmployees;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_ALL_EMPLOYEE);
@@ -55,13 +55,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     @Override
-    public ObservableList<Employee> receiveEmployeeById(int id) {
-        ObservableList<Employee> employeesById;
+    public Employee findEmployeeById(int id) {
+        Employee employeesById;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeesById = putEmployees(resultSet);
+            employeesById = putEmployee(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %s have done successfully. " +
                     "Employee: %s.", id, employeesById));
         } catch (SQLException e) {
@@ -71,13 +71,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public ObservableList<Employee> receiveEmployeeByPersonnelNumber(int personnelNumber) {
-        ObservableList<Employee> employeeByPersonnelNumber;
+    public Employee findEmployeeByPersonnelNumber(int personnelNumber) {
+        Employee employeeByPersonnelNumber;
         try (Connection connection = dateBaseUtil.receiveConnection();) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_PERSONNEL_NUMBER);
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeeByPersonnelNumber = putEmployees(resultSet);
+            employeeByPersonnelNumber = putEmployee(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with personnelNumber %s have done successfully. " +
                     "Employee: %s.", personnelNumber, employeeByPersonnelNumber));
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public ObservableList<Employee> receiveEmployeeByName(String name) {
+    public ObservableList<Employee> findEmployeesByName(String name) {
         ObservableList<Employee> employeesByName;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_NAME);
@@ -103,7 +103,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public ObservableList<Employee> receiveEmployeeBySurname(String surname) {
+    public ObservableList<Employee> findEmployeesBySurname(String surname) {
         ObservableList<Employee> employeeBySurname;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_SURNAME);
@@ -134,5 +134,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
             employees.add(employee);
         }
         return employees;
+    }
+
+    private Employee putEmployee(ResultSet resultSet) throws SQLException {
+        Employee employee = new Employee();
+        while (resultSet.next()) {
+            employee.setIdEmployee(resultSet.getInt(ID.getDateBaseColumnNames()));
+            employee.setPersonnelNumber(resultSet.getInt(PERSONNEL_NUMBER.getDateBaseColumnNames()));
+            employee.setName(resultSet.getString(NAME.getDateBaseColumnNames()));
+            employee.setSurname(resultSet.getString(SURNAME.getDateBaseColumnNames()));
+        }
+        return employee;
     }
 }

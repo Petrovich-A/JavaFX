@@ -66,7 +66,7 @@ public class ShowEmployeesController implements Initializable {
         column_name.setCellValueFactory(new PropertyValueFactory<>(NAME.getEmployeeClassFieldsNames()));
         column_surname.setCellValueFactory(new PropertyValueFactory<>(SURNAME.getEmployeeClassFieldsNames()));
 
-        listEmployee = employeeDaoImpl.receiveAllEmployee();
+        listEmployee = employeeDaoImpl.findAllEmployees();
         table.setItems(listEmployee);
         choiceBoxItemNames.forEach((itemName) -> choice_box.getItems().add(itemName));
     }
@@ -78,7 +78,7 @@ public class ShowEmployeesController implements Initializable {
      */
     @FXML
     protected void onFindButtonClick() {
-        ObservableList<Employee> listEmployee;
+        ObservableList<Employee> listEmployee = null;
         String selectedItem;
         String searchKeyWord;
         try {
@@ -95,19 +95,19 @@ public class ShowEmployeesController implements Initializable {
             FieldNames fieldNames = getSwitch(selectedItem);
             switch (fieldNames) {
                 case ID -> {
-                    listEmployee = employeeDaoImpl.receiveEmployeeById(Integer.parseInt(searchKeyWord));
+                    listEmployee.add(employeeDaoImpl.findEmployeeById(Integer.parseInt(searchKeyWord)));
                     putItems(listEmployee);
                 }
                 case PERSONNEL_NUMBER -> {
-                    listEmployee = employeeDaoImpl.receiveEmployeeByPersonnelNumber(Integer.parseInt(searchKeyWord));
+                    listEmployee.add(employeeDaoImpl.findEmployeeByPersonnelNumber(Integer.parseInt(searchKeyWord)));
                     putItems(listEmployee);
                 }
                 case NAME -> {
-                    listEmployee = employeeDaoImpl.receiveEmployeeByName(searchKeyWord);
+                    listEmployee = employeeDaoImpl.findEmployeesByName(searchKeyWord);
                     putItems(listEmployee);
                 }
                 case SURNAME -> {
-                    listEmployee = employeeDaoImpl.receiveEmployeeBySurname(searchKeyWord);
+                    listEmployee = employeeDaoImpl.findEmployeesBySurname(searchKeyWord);
                     putItems(listEmployee);
                 }
                 default -> {
