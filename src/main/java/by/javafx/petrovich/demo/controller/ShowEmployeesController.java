@@ -2,6 +2,7 @@ package by.javafx.petrovich.demo.controller;
 
 import by.javafx.petrovich.demo.dao.impl.EmployeeDaoImpl;
 import by.javafx.petrovich.demo.model.Employee;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -78,7 +79,7 @@ public class ShowEmployeesController implements Initializable {
      */
     @FXML
     protected void onFindButtonClick() {
-        ObservableList<Employee> listEmployee = null;
+        ObservableList<Employee> listEmployee = FXCollections.observableArrayList();
         String selectedItem;
         String searchKeyWord;
         try {

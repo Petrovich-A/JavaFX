@@ -26,23 +26,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private DateBaseUtil dateBaseUtil = new DateBaseUtil();
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PERCENT_SIGN = "%";
-    private static final String SQL_READ_ALL_EMPLOYEE = "SELECT id_employee, personnel_number, name, surname " +
-            "FROM employeesort.employees;";
-    private static final String SQL_READ_EMPLOYEE_BY_ID = "SELECT id_employee, personnel_number, name, surname " +
-            "FROM employees where id_employee = ?";
-    private static final String SQL_READ_EMPLOYEE_BY_PERSONNEL_NUMBER = "SELECT id_employee, personnel_number, name, surname " +
-            "FROM employees where personnel_number = ?";
-    private static final String SQL_READ_EMPLOYEE_BY_NAME = "SELECT id_employee, personnel_number, name, surname " +
-            "FROM employees where name like ?";
-    private static final String SQL_READ_EMPLOYEE_BY_SURNAME = "SELECT id_employee, personnel_number,name,surname " +
-            "FROM employees where surname like ?";
-
+    private static final String SELECT_ALL = "SELECT id_employee, personnel_number, name, surname ";
+    private static final String FROM = "FROM employees ";
+    private static final String WHERE_ID = "where id_employee = ?";
+    private static final String WHERE_PERSONNEL_NUMBER = "where personnel_number = ?";
+    private static final String WHERE_NAME = "where name like ?";
+    private static final String WHERE_SURNAME = "where surname like ?";
 
     @Override
     public ObservableList<Employee> findAllEmployees() {
         ObservableList<Employee> allEmployees;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_ALL_EMPLOYEE);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM);
             ResultSet resultSet = preparedStatement.executeQuery();
             allEmployees = putEmployees(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading all Employees from date base have done successfully. " +
@@ -56,25 +51,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee findEmployeeById(int id) {
-        Employee employeesById;
+        Employee employeeById;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            employeesById = putEmployee(resultSet);
+            employeeById = putEmployee(resultSet);
             LOGGER.log(Level.INFO, String.format("Reading Employee from date base with id %s have done successfully. " +
-                    "Employee: %s.", id, employeesById));
+                    "Employee: %s.", id, employeeById));
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Can't receive employee with id %s from date base.", id, e));
         }
-        return employeesById;
+        return employeeById;
     }
 
     @Override
     public Employee findEmployeeByPersonnelNumber(int personnelNumber) {
         Employee employeeByPersonnelNumber;
         try (Connection connection = dateBaseUtil.receiveConnection();) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_PERSONNEL_NUMBER);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_PERSONNEL_NUMBER);
             preparedStatement.setInt(1, personnelNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeByPersonnelNumber = putEmployee(resultSet);
@@ -90,7 +85,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public ObservableList<Employee> findEmployeesByName(String name) {
         ObservableList<Employee> employeesByName;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_NAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM + WHERE_NAME);
             preparedStatement.setString(1, name + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeesByName = putEmployees(resultSet);
@@ -106,7 +101,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public ObservableList<Employee> findEmployeesBySurname(String surname) {
         ObservableList<Employee> employeeBySurname;
         try (Connection connection = dateBaseUtil.receiveConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_READ_EMPLOYEE_BY_SURNAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL + FROM +WHERE_SURNAME);
             preparedStatement.setString(1, surname + PERCENT_SIGN);
             ResultSet resultSet = preparedStatement.executeQuery();
             employeeBySurname = putEmployees(resultSet);
