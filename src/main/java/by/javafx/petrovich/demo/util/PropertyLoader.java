@@ -1,5 +1,7 @@
 package by.javafx.petrovich.demo.util;
 
+import by.javafx.petrovich.demo.controller.ShowEmployeesController;
+import javafx.scene.control.Alert;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import static by.javafx.petrovich.demo.controller.AlertMessages.FAILED_READING_PROPERTIES_FILE;
+import static by.javafx.petrovich.demo.controller.AlertMessages.NO_PROPERTIES_FILE;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
+
 /**
  * @author Petrovich A.V.
  */
@@ -19,6 +25,7 @@ public class PropertyLoader {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PROPERTY_PATH = "src/main/resources/properties/jdbc-sql-config.properties";
     private static final Properties PROPERTIES = new Properties();
+    private static ShowEmployeesController showEmployeesController = new ShowEmployeesController();
 
     static {
         Path path = Paths.get(PROPERTY_PATH);
@@ -27,6 +34,7 @@ public class PropertyLoader {
             readProperties(inputStream);
         } catch (FileNotFoundException e) {
             LOGGER.log(Level.ERROR, "File does not exist, initialization failed.", PROPERTY_PATH);
+            showEmployeesController.showAlert(NO_PROPERTIES_FILE, Alert.AlertType.ERROR, ERROR);
             throw new RuntimeException("File does not exist, initialization failed.", e);
         }
     }
@@ -39,10 +47,12 @@ public class PropertyLoader {
     private static void readProperties(InputStream inputStream) {
         try {
             PROPERTIES.load(inputStream);
+            LOGGER.log(Level.INFO, "Reading properties file successfully.");
         } catch (IOException e) {
-            LOGGER.log(Level.ERROR, "Reading database properties failed", e.getMessage());
+            LOGGER.log(Level.ERROR, "Reading properties file failed", e.getMessage());
+            showEmployeesController.showAlert(FAILED_READING_PROPERTIES_FILE, Alert.AlertType.ERROR, ERROR);
+            throw new RuntimeException("Reading properties file failed.", e);
         }
-        LOGGER.log(Level.INFO, "Reading properties file successfully.");
     }
 
     /**

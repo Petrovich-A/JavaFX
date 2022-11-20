@@ -71,6 +71,25 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
+     * @param alertMessage String information contains a sense of the alert message, viewed on UI
+     * @param alertType    Alert is a part of JavaFX, so it is a subclass of Dialog class. Alerts are some predefined dialogs that are used to show some information to the user.
+     *                     Alerts are basically of specific alert types:
+     *                     <ul>
+     *                         <li> CONFIRMATION alert
+     *                         <li> WARNING alert
+     *                         <li> INFORMATION alert
+     *                         <li> ERROR alert
+     *                     </ul>
+     * @param title        The title of the alert window
+     */
+    public void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(alertMessage);
+        alert.showAndWait();
+    }
+
+    /**
      * <code>onFindButtonClick</code> method executes the main application logic on clicking the Find button. It allows to search
      * for data about employees in the database and display the results depending on the selected element (field) in the
      * drop-down list for which the search is performed and the text field in which a user input text to search for.
@@ -121,6 +140,7 @@ public class ShowEmployeesController implements Initializable {
 
     /**
      * Fill the ChoiceBox on UI with items for selecting by them.
+     *
      * @return choiceBoxItemNames <code>ArrayList<String></code> list of items
      */
     private ArrayList<String> populateChoiceBoxItems() {
@@ -144,29 +164,10 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @param alertMessage String information contains a sense of the alert message, viewed on UI
-     * @param alertType Alert is a part of JavaFX, so it is a subclass of Dialog class. Alerts are some predefined dialogs that are used to show some information to the user.
-     *                  Alerts are basically of specific alert types:
-     *                  <ul>
-     *                      <li> CONFIRMATION alert
-     *                      <li> WARNING alert
-     *                      <li> INFORMATION alert
-     *                      <li> ERROR alert
-     *                  </ul>
-     * @param title The title of the alert window
-     */
-    private void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(alertMessage);
-        alert.showAndWait();
-    }
-
-    /**
      * @param selectedItem The item (id, personnel number, name, surname) selected in dropdown list in ChoiceBox on UI
      * @return <code>FieldNames fieldNames</code> The name of the selected item
      */
-    public FieldNames defineEnumElement(String selectedItem) {
+    private FieldNames defineEnumElement(String selectedItem) {
         Optional<FieldNames> enumValueOptional = Arrays.stream(FieldNames.values())
                 .filter(v -> v.getChoiceBoxItemNames().equalsIgnoreCase(selectedItem))
                 .findFirst();
