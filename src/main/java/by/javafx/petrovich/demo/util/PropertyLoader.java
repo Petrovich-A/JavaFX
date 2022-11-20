@@ -4,8 +4,12 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -13,16 +17,18 @@ import java.util.Properties;
  */
 public class PropertyLoader {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String PROPERTY_PATH = "jdbc-sql-config.properties";
+    private static final String PROPERTY_PATH = "src/main/resources/properties/jdbc-sql-config.properties";
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        InputStream inputStream = PropertyLoader.class.getClassLoader().getResourceAsStream(PROPERTY_PATH);
-        if (inputStream == null) {
+        Path path = Paths.get(PROPERTY_PATH);
+        try {
+            InputStream inputStream = new FileInputStream(path.toFile());
+            readProperties(inputStream);
+        } catch (FileNotFoundException e) {
             LOGGER.log(Level.ERROR, "File does not exist, initialization failed.", PROPERTY_PATH);
-            throw new RuntimeException("File does not exist, initialization failed.");
+            throw new RuntimeException("File does not exist, initialization failed.", e);
         }
-        readProperties(inputStream);
     }
 
     /**
@@ -36,7 +42,7 @@ public class PropertyLoader {
         } catch (IOException e) {
             LOGGER.log(Level.ERROR, "Reading database properties failed", e.getMessage());
         }
-        LOGGER.log(Level.INFO, "Reading property file successful.");
+        LOGGER.log(Level.INFO, "Reading properties file successfully.");
     }
 
     /**
