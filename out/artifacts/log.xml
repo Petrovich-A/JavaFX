@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>Q:\IT\JavaFX\EmployeeApp\out\artifacts\EmployeeSort\EmployeeSort.jar</jar>
+  <outfile>Q:\IT\JavaFX\EmployeeApp\out\artifacts\EmployeeSort\EmployeeSort.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon></icon>
+  <jre>
+    <path>C:\Users\User\.jdks\openjdk-17.0.1</path>
+    <requiresJdk>false</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion>1.4</minVersion>
+    <maxVersion>17.0.1</maxVersion>
+  </jre>
+</launch4jConfig>

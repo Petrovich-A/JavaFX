@@ -1,0 +1,1 @@
+SELECT id_employee, personnel_number, name, surname FROM employees where id_employee = 15;
