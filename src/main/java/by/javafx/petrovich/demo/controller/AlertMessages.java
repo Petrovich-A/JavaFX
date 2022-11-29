@@ -11,4 +11,7 @@ public class AlertMessages {
     public static final String NO_INPUT_VALUE = "No value in text field.";
     public static final String NO_PROPERTIES_FILE = "No access to properties file.";
     public static final String FAILED_READING_PROPERTIES_FILE = "Problems during reading properties file.";
+    public static final String CANT_LOAD_FILE = "Can't load the file.";
+    public static final String CANT_LOAD_XML_FILE = "Can't load XML file.";
+    public static final String FAILED_CONNECTION = "Connection to database failed.";
 }

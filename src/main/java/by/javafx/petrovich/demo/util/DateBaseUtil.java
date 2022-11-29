@@ -1,16 +1,19 @@
 package by.javafx.petrovich.demo.util;
 
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import javafx.fxml.Initializable;
+import static by.javafx.petrovich.demo.controller.AlertMessages.FAILED_CONNECTION;
+import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
 
 /**
  * Receiving a connection with database using data stored in property file.
@@ -25,6 +28,7 @@ public class DateBaseUtil implements Initializable {
     private static final String CONNECTION_URL = PROPERTY_LOADER.receive("CONNECTION_URL");
     private static final String USER_NAME = PROPERTY_LOADER.receive("USER_NAME");
     private static final String PASSWORD = PROPERTY_LOADER.receive("PASSWORD");
+    private final HealtheCheckController healtheCheckController = new HealtheCheckController();
 
     public Connection receiveConnection() throws SQLException {
         if (connection == null) {
@@ -35,7 +39,8 @@ public class DateBaseUtil implements Initializable {
                 return connection;
             } catch (Exception e) {
                 LOGGER.log(Level.ERROR, "Connection Failed!", e);
-                e.printStackTrace();
+                healtheCheckController.showAlert(FAILED_CONNECTION, Alert.AlertType.ERROR, ERROR);
+                throw new RuntimeException(e);
             }
         }
         return connection;

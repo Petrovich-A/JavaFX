@@ -2,6 +2,7 @@ package by.javafx.petrovich.demo.controller;
 
 import by.javafx.petrovich.demo.dao.impl.EmployeeDaoImpl;
 import by.javafx.petrovich.demo.model.Employee;
+import by.javafx.petrovich.demo.util.HealtheCheckController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,6 +52,7 @@ public class ShowEmployeesController implements Initializable {
     @FXML
     private TextField text_field;
     private final EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
+    private final HealtheCheckController healtheCheckController = new HealtheCheckController();
 
     /**
      * @param url            The location used to resolve relative paths for the root object, or
@@ -71,25 +73,6 @@ public class ShowEmployeesController implements Initializable {
     }
 
     /**
-     * @param alertMessage String information contains a sense of the alert message, viewed on UI
-     * @param alertType    Alert is a part of JavaFX, so it is a subclass of Dialog class. Alerts are some predefined dialogs that are used to show some information to the user.
-     *                     Alerts are basically of specific alert types:
-     *                     <ul>
-     *                         <li> CONFIRMATION alert
-     *                         <li> WARNING alert
-     *                         <li> INFORMATION alert
-     *                         <li> ERROR alert
-     *                     </ul>
-     * @param title        The title of the alert window
-     */
-    public void showAlert(String alertMessage, Alert.AlertType alertType, String title) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(alertMessage);
-        alert.showAndWait();
-    }
-
-    /**
      * <code>onFindButtonClick</code> method executes the main application logic on clicking the Find button. It allows to search
      * for data about employees in the database and display the results depending on the selected element (field) in the
      * drop-down list for which the search is performed and the text field in which a user input text to search for.
@@ -103,11 +86,11 @@ public class ShowEmployeesController implements Initializable {
             selectedItem = choice_box.getSelectionModel().getSelectedItem();
             searchKeyWord = text_field.getText();
             if (selectedItem == null) {
-                showAlert(NO_CHOICE_ITEM, Alert.AlertType.WARNING, WARNING);
+                healtheCheckController.showAlert(NO_CHOICE_ITEM, Alert.AlertType.WARNING, WARNING);
                 return;
             }
             if (searchKeyWord.isEmpty()) {
-                showAlert(NO_INPUT_VALUE, Alert.AlertType.WARNING, WARNING);
+                healtheCheckController.showAlert(NO_INPUT_VALUE, Alert.AlertType.WARNING, WARNING);
                 return;
             }
             FieldNames fieldNames = defineEnumElement(selectedItem);
@@ -132,9 +115,9 @@ public class ShowEmployeesController implements Initializable {
                 }
             }
         } catch (NumberFormatException e) {
-            showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
+            healtheCheckController.showAlert(INPUT_NUMBER, Alert.AlertType.WARNING, ERROR);
         } catch (Exception e) {
-            showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, INFORMATION);
+            healtheCheckController.showAlert(CHOICE_AND_FILL, Alert.AlertType.ERROR, INFORMATION);
         }
     }
 
@@ -159,7 +142,7 @@ public class ShowEmployeesController implements Initializable {
         if (!listEmployee.isEmpty()) {
             table.setItems(listEmployee);
         } else {
-            showAlert(NO_RESULTS, Alert.AlertType.INFORMATION, INFORMATION);
+            healtheCheckController.showAlert(NO_RESULTS, Alert.AlertType.INFORMATION, INFORMATION);
         }
     }
 
