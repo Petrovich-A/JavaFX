@@ -159,4 +159,12 @@ public class ShowEmployeesController implements Initializable {
         }
         return enumValueOptional.get();
     }
+
+    /**
+     * Insert all employees list into the main table after pushing on reset button.
+     */
+    public void onResetButtonClick() {
+        ObservableList<Employee> listEmployee = employeeDaoImpl.findAllEmployees();
+        table.setItems(listEmployee);
+    }
 }
