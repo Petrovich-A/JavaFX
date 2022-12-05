@@ -6,12 +6,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -29,7 +26,6 @@ public class PropertyLoader {
     private static final HealtheCheckController healtheCheckController = new HealtheCheckController();
 
     static {
-        Path path = Paths.get(PROPERTY_PATH);
         try {
             InputStream inputStream = Optional.ofNullable(EmployeeApplication.class.getResourceAsStream(PROPERTY_PATH))
                     .orElseThrow(FileNotFoundException::new);
