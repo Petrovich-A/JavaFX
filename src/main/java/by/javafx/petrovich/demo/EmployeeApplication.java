@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
+import java.util.Optional;
 
 import static by.javafx.petrovich.demo.controller.AlertMessages.CANT_LOAD_FILE;
 import static by.javafx.petrovich.demo.controller.AlertMessages.CANT_LOAD_XML_FILE;
@@ -35,9 +37,9 @@ public class EmployeeApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(EmployeeApplication.class.getResource("employeeSort.fxml"));
-        Path path = Paths.get("src/main/resources/icons/bussiness-man.png");
         try {
-            InputStream inputStream = new FileInputStream(path.toFile());
+            InputStream inputStream = Optional.ofNullable(EmployeeApplication.class.getResourceAsStream("/icons/bussiness-man.png"))
+                    .orElseThrow(FileNotFoundException::new);
             Image image = new Image(inputStream);
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setScene(scene);

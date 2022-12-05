@@ -1,5 +1,6 @@
 package by.javafx.petrovich.demo.util;
 
+import by.javafx.petrovich.demo.EmployeeApplication;
 import javafx.scene.control.Alert;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Properties;
 
 import static by.javafx.petrovich.demo.controller.AlertMessages.FAILED_READING_PROPERTIES_FILE;
@@ -22,17 +24,17 @@ import static by.javafx.petrovich.demo.controller.AlertTitleNames.ERROR;
  */
 public class PropertyLoader {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String PROPERTY_PATH = "src/main/resources/properties/jdbc-sql-config.properties";
+    private static final String PROPERTY_PATH = "/properties/jdbc-sql-config.properties";
     private static final Properties PROPERTIES = new Properties();
     private static final HealtheCheckController healtheCheckController = new HealtheCheckController();
 
     static {
-        Path path = Paths.get(PROPERTY_PATH);
         try {
-            InputStream inputStream = new FileInputStream(path.toFile());
+            InputStream inputStream = Optional.ofNullable(EmployeeApplication.class.getResourceAsStream(PROPERTY_PATH))
+                    .orElseThrow(FileNotFoundException::new);
             readProperties(inputStream);
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.ERROR, "File does not exist, initialization failed.", PROPERTY_PATH);
+        } catch (Exception e) {
+            LOGGER.log(Level.ERROR, "File {} does not exist, initialization failed.", PROPERTY_PATH);
             healtheCheckController.showAlert(NO_PROPERTIES_FILE, Alert.AlertType.ERROR, ERROR);
             throw new RuntimeException("File does not exist, initialization failed.", e);
         }
@@ -48,7 +50,7 @@ public class PropertyLoader {
             PROPERTIES.load(inputStream);
             LOGGER.log(Level.INFO, "Reading properties file successfully.");
         } catch (IOException e) {
-            LOGGER.log(Level.ERROR, "Reading properties file failed", e.getMessage());
+            LOGGER.log(Level.ERROR, "Reading {} properties file failed", e.getMessage());
             healtheCheckController.showAlert(FAILED_READING_PROPERTIES_FILE, Alert.AlertType.ERROR, ERROR);
             throw new RuntimeException("Reading properties file failed.", e);
         }
